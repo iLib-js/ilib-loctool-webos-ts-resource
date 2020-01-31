@@ -1,0 +1,58 @@
+{
+    "name": "ilib-loctool-webos-ts-resource",
+    "version": "1.0.0",
+    "main": "./TSFileType.js",
+    "description": "A loctool plugin that knows how to process ts resource files",
+    "license": "Apache-2.0",
+    "keywords": [
+        "internationalization",
+        "i18n",
+        "localization",
+        "l10n",
+        "globalization",
+        "g11n",
+        "strings",
+        "resources",
+        "locale",
+        "translation",
+        "qml",
+        "ts"
+    ],
+    "author": {
+        "name": "Goun Lee",
+        "email": "goun.lee.com"
+    },
+    "contributors": [
+        {
+            "name": "Goun Lee",
+            "email": "goun.lee@lge.com"
+        }
+    ],
+    "files": [
+        "README.md",
+        "LICENSE",
+        "TSResourceFileType.js",
+        "TSResourceFile.js"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/iLib-js/ilib-loctool-webos-ts-resource.git"
+    },
+    "scripts": {
+        "dist": "npm pack",
+        "test": "node test/testSuite.js",
+        "debug": "node --inspect-brk test/testSuite.js",
+        "clean": "git clean -f -d *"
+    },
+    "engines": {
+        "node": ">=6.0"
+    },
+    "dependencies": {
+        "ilib": "^14.4.0",
+        "log4js": "^2.11.0"
+    },
+    "devDependencies": {
+        "loctool": "^2.4.0",
+        "nodeunit": "^0.11.3"
+    }
+}
