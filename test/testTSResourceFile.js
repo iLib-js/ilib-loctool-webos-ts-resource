@@ -36,22 +36,22 @@ function diff(a, b) {
 }
 
 var p = new CustomProject({
-    id: "webOSQML",
+    id: "inputcommon",
     projectType: "webos-qml",
     sourceLocale: "en-US",
     resourceDirs: {
-        "json": "localized_json"
+        "ts": "."
         }
     }, "./testfiles", {
         locales:["en-GB"]
     });
 
 var p2 = new CustomProject({
-    id: "webOSQML",
+    id: "quicksettings",
     projectType: "webos-qml",
     sourceLocale: "en-US",
     resourceDirs: {
-        "json": "localized_json"
+        "ts": "locales"
         }
     }, "./testfiles", {
     locales:["en-GB", "de-DE", "de-AT"],
@@ -94,7 +94,7 @@ module.exports.tsresourcefile = {
         [
             p.getAPI().newResource({
                 type: "string",
-                project: "webOSQML",
+                project: "inputcommon",
                 targetLocale: "de-DE",
                 key: "source text",
                 sourceLocale: "en-US",
@@ -103,7 +103,7 @@ module.exports.tsresourcefile = {
             }),
             p.getAPI().newResource({
                 type: "string",
-                project: "webOSQML",
+                project: "inputcommon",
                 targetLocale: "de-DE",
                 key: "more source text",
                 sourceLocale: "en-US",
@@ -112,7 +112,7 @@ module.exports.tsresourcefile = {
             }),
             p.getAPI().newResource({
                 type: "string",
-                project: "webOSQML",
+                project: "inputcommon",
                 targetLocale: "de-DE",
                 key: "yet more source text",
                 sourceLocale: "en-US",
@@ -136,44 +136,31 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        [
-            p2.getAPI().newResource({
+        var resource = p2.getAPI().newResource({
                 type: "string",
-                project: "webOSQML",
+                project: "inputcommon",
                 targetLocale: "de-DE",
                 key: "source text",
                 sourceLocale: "en-US",
                 source: "source text",
                 target: "Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "de-DE",
-                key: "more source text",
-                sourceLocale: "en-US",
-                source: "more source text",
-                target: "mehr Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "de-DE",
-                key: "yet more source text",
-                sourceLocale: "en-US",
-                source: "yet more source text",
-                target: "noch mehr Quellentext"
-            })
-        ].forEach(function(res) {
-            tsrf.addResource(res);
-        });
+
+            });
 
         test.equal(tsrf.getContent(),
-            '{\n' +
-            '    "more source text": "mehr Quellentext",\n' +
-            '    "source text": "Quellentext",\n' +
+            '<?xml version="1.0" encoding="utf-8"?>\n' +
+            '    <!DOCTYPE TS>\n' +
+            '    <TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
             '    "yet more source text": "noch mehr Quellentext"\n' +
-            '}'
+            '    <context>\n' +
+            '    <name></name>\n' +
+            '    <message>\n' +
+            '    <location filename="Test.qml" line="7"/>\n' +
+            '    <source></source>\n' +
+            '    <translation</translation>\n' +
+            '    </message>\n' +
+            '    </conatext> \n' +
+            '    </TS> \n'
         );
 
         test.done();
@@ -204,7 +191,7 @@ module.exports.tsresourcefile = {
         [
             p2.getAPI().newResource({
                 type: "string",
-                project: "webOSQML",
+                project: "inputcommon",
                 targetLocale: "de-DE",
                 key: "source text",
                 sourceLocale: "en-US",
@@ -224,12 +211,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(res);
         });
 
-        test.equal(tsrf.getContent(),
-            '{\n' +
-            '    "more source text": "mehr Quellen\\"text",\n' +
-            '    "source text": "Quellen\\"text"\n' +
-            '}'
-        );
+        test.equal(tsrf.getContent(),"");
         test.done();
     },
 
@@ -245,7 +227,7 @@ module.exports.tsresourcefile = {
         [
             p2.getAPI().newResource({
                 type: "string",
-                project: "webOSQML",
+                project: "inputcommon",
                 targetLocale: "de-DE",
                 key: "source text",
                 sourceLocale: "en-US",
@@ -254,7 +236,7 @@ module.exports.tsresourcefile = {
             }),
             p2.getAPI().newResource({
                 type: "string",
-                project: "webOSQML",
+                project: "inputcommon",
                 targetLocale: "de-DE",
                 key: "more source text",
                 sourceLocale: "en-US",
@@ -265,12 +247,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(res);
         });
 
-        test.equal(tsrf.getContent(),
-            '{\n' +
-            '    "more source text": "mehr Quellen\'text",\n' +
-            '    "source text": "Quellen\'text"\n' +
-            '}'
-        );
+        test.equal(tsrf.getContent(),"");
 
         test.done();
     },
@@ -288,7 +265,7 @@ module.exports.tsresourcefile = {
         [
             p2.getAPI().newResource({
                 type: "string",
-                project: "webOSQML",
+                project: "inputcommon",
                 targetLocale: "de-DE",
                 key: "source text",
                 sourceLocale: "en-US",
@@ -297,7 +274,7 @@ module.exports.tsresourcefile = {
             }),
             p2.getAPI().newResource({
                 type: "string",
-                project: "webOSQML",
+                project: "inputcommon",
                 targetLocale: "de-DE",
                 key: "more source text",
                 sourceLocale: "en-US",
@@ -306,7 +283,7 @@ module.exports.tsresourcefile = {
             }),
             p2.getAPI().newResource({
                 type: "string",
-                project: "webOSQML",
+                project: "inputcommon",
                 targetLocale: "de-DE",
                 key: "yet more source text",
                 sourceLocale: "en-US",
@@ -318,11 +295,7 @@ module.exports.tsresourcefile = {
         });
 
         var expected =
-            '{\n' +
-            '    "more source text": "<span loclang=\\"javascript\\" locid=\\"more source text\\">mehr Quellentext</span>",\n' +
-            '    "source text": "<span loclang=\\"javascript\\" locid=\\"source text\\">Quellentext</span>",\n' +
-            '    "yet more source text": "<span loclang=\\"javascript\\" locid=\\"yet more source text\\">noch mehr Quellentext</span>"\n' +
-            '}';
+            '';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -340,7 +313,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "localized_json/de.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/inputcommon_de.ts");
         test.done();
     },
 
@@ -353,7 +326,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "localized_json/de.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/inputcommon_de.ts");
         test.done();
     },
 
@@ -366,7 +339,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "localized_json/de-AT.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_de_AT.ts");
         test.done();
     },
 
@@ -379,7 +352,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "localized_json/de.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_de.ts");
         test.done();
     },
 
@@ -392,7 +365,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "localized_json/de-AT-ASDF.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_de_AT_ASDF.ts");
         test.done();
     },
 
@@ -405,7 +378,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "localized_json/zh.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_zh.ts");
         test.done();
     },
 
@@ -418,7 +391,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "localized_json/zh.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/inputcommon_zh.ts");
         test.done();
     },
 
@@ -431,7 +404,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "localized_json/zh-Hant-HK.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_zh_Hant_HK.ts");
         test.done();
     },
 
@@ -444,7 +417,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "localized_json/zh-Hans-SG.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_zh_Hans_SG.ts");
         test.done();
     },
 
@@ -457,7 +430,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "localized_json/zh-Hant-TW.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_zh_Hant_TW.ts");
         test.done();
     },
 
@@ -470,7 +443,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "localized_json/en.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_en.ts");
         test.done();
     },
 
@@ -483,7 +456,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "localized_json/de-AT.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_de_AT.ts");
         test.done();
     },
 
@@ -530,12 +503,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the default locale spec in the first line
-        var expected =
-            '{\n' +
-            '    "more source text": "<span loclang=\\"javascript\\" locid=\\"more source text\\">mehr Quellentext</span>",\n' +
-            '    "source text": "<span loclang=\\"javascript\\" locid=\\"source text\\">Quellentext</span>",\n' +
-            '    "yet more source text": "<span loclang=\\"javascript\\" locid=\\"yet more source text\\">noch mehr Quellentext</span>"\n' +
-            '}';
+        var expected = '';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -598,12 +566,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the full locale spec in the first line
-        var expected =
-            '{\n' +
-            '    "more source text": "<span loclang=\\"javascript\\" locid=\\"more source text\\">mehr Quellentext</span>",\n' +
-            '    "source text": "<span loclang=\\"javascript\\" locid=\\"source text\\">Quellentext</span>",\n' +
-            '    "yet more source text": "<span loclang=\\"javascript\\" locid=\\"yet more source text\\">noch mehr Quellentext</span>"\n' +
-            '}';
+        var expected = '';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -655,12 +618,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the full locale spec in the first line
-        var expected =
-            '{\n' +
-            '    "more source text": "<span loclang=\\"javascript\\" locid=\\"more source text\\">mehr Quellentext</span>",\n' +
-            '    "source text": "<span loclang=\\"javascript\\" locid=\\"source text\\">Quellentext</span>",\n' +
-            '    "yet more source text": "<span loclang=\\"javascript\\" locid=\\"yet more source text\\">noch mehr Quellentext</span>"\n' +
-            '}';
+        var expected = '';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -712,12 +670,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the default locale spec in the first line
-        var expected =
-            '{\n' +
-            '    "more source text": "<span loclang=\\"javascript\\" locid=\\"more source text\\">mehr Quellentext</span>",\n' +
-            '    "source text": "<span loclang=\\"javascript\\" locid=\\"source text\\">Quellentext</span>",\n' +
-            '    "yet more source text": "<span loclang=\\"javascript\\" locid=\\"yet more source text\\">noch mehr Quellentext</span>"\n' +
-            '}';
+        var expected = '';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -769,12 +722,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the default locale spec in the first line
-        var expected =
-            '{\n' +
-            '    "more source text": "<span loclang=\\"javascript\\" locid=\\"more source text\\">mehr Quellentext</span>",\n' +
-            '    "source text": "<span loclang=\\"javascript\\" locid=\\"source text\\">Quellentext</span>",\n' +
-            '    "yet more source text": "<span loclang=\\"javascript\\" locid=\\"yet more source text\\">noch mehr Quellentext</span>"\n' +
-            '}';
+        var expected = '';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -826,12 +774,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the default locale spec in the first line
-        var expected =
-            '{\n' +
-            '    "more source text": "<span loclang=\\"javascript\\" locid=\\"more source text\\">mehr Quellentext</span>",\n' +
-            '    "source text": "<span loclang=\\"javascript\\" locid=\\"source text\\">Quellentext</span>",\n' +
-            '    "yet more source text": "<span loclang=\\"javascript\\" locid=\\"yet more source text\\">noch mehr Quellentext</span>"\n' +
-            '}';
+        var expected = '';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -883,12 +826,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the default locale spec in the first line
-        var expected =
-            '{\n' +
-            '    "more source text": "<span loclang=\\"javascript\\" locid=\\"more source text\\">mehr Quellentext</span>",\n' +
-            '    "source text": "<span loclang=\\"javascript\\" locid=\\"source text\\">Quellentext</span>",\n' +
-            '    "yet more source text": "<span loclang=\\"javascript\\" locid=\\"yet more source text\\">noch mehr Quellentext</span>"\n' +
-            '}';
+        var expected = '';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -940,12 +878,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the default locale spec in the first line
-        var expected =
-            '{\n' +
-            '    "more source text": "<span loclang=\\"javascript\\" locid=\\"more source text\\">mehr Quellentext</span>",\n' +
-            '    "source text": "<span loclang=\\"javascript\\" locid=\\"source text\\">Quellentext</span>",\n' +
-            '    "yet more source text": "<span loclang=\\"javascript\\" locid=\\"yet more source text\\">noch mehr Quellentext</span>"\n' +
-            '}';
+        var expected = '';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -997,12 +930,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the default locale spec in the first line
-        var expected =
-            '{\n' +
-            '    "more source text": "<span loclang=\\"javascript\\" locid=\\"more source text\\">mehr Quellentext</span>",\n' +
-            '    "source text": "<span loclang=\\"javascript\\" locid=\\"source text\\">Quellentext</span>",\n' +
-            '    "yet more source text": "<span loclang=\\"javascript\\" locid=\\"yet more source text\\">noch mehr Quellentext</span>"\n' +
-            '}';
+        var expected = '';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -1017,13 +945,13 @@ module.exports.tsresourcefile = {
                     "es-ES","et-EE","fa-IR","fa-AF","fr-FR","fr-CA", "zh-Hans-CN","zh-Hant-HK","zh-Hant-TW"];
 
         var expected = [
-            "localized_json/en.ts","localized_json/en-GB.ts",
-            "localized_json/en/AU.ts","localized_json/es-CO.ts",
-            "localized_json/es.ts","localized_json/et.ts",
-            "localized_json/fa.ts","localized_json/fa-AF.ts",
-            "localized_json/fr.ts","localized_json/fr-CA.ts",
-            "localized_json/zh.ts","localized_json/zh-Hant-HK.ts",
-            "localized_json/zh/Hant/TW.ts"
+            "locales/en.ts","locales/en_GB.ts",
+            "locales/en_AU.ts","locales/es_CO.ts",
+            "locales/es.ts","locales/et.ts",
+            "locales/fa.ts","locales/fa_AF.ts",
+            "locales/fr.ts","locales/fr_CA.ts",
+            "locales/zh.ts","locales/zh_Hant_HK.ts",
+            "locales/zh_Hant_TW.ts"
         ];
         for (var i=0; i<locales.length;i++) {
             jsrf = new TSResourceFile({

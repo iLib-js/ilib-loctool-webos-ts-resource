@@ -74,7 +74,7 @@ TSResourceFileType.prototype.write = function() {
 };
 
 TSResourceFileType.prototype.name = function() {
-    return "ts Resource File";
+    return "TS Resource File";
 };
 
 /**
@@ -195,15 +195,4 @@ TSResourceFileType.prototype.getPseudo = function() {
     return this.pseudo;
 };
 
-/**
- * Called right before each project is closed
- * Allows the file type class to do any last-minute clean-up or generate any final files
- *
- * Generate manifest file based on created resource files
- */
-TSResourceFileType.prototype.projectClose = function() {
-    var resourceRoot = this.project.getResourceDirs("json")[0] || "resources";
-    var manifestFile = new TSResourceFile({project: this.project});
-    manifestFile.writeManifest(resourceRoot);
-};
 module.exports = TSResourceFileType;

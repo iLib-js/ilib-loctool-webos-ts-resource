@@ -68,7 +68,6 @@ module.exports.tsresourcefiletype = {
         var tsft =new TSResourceFileType(p);
         test.ok(tsft);
         test.ok(!tsft.handles("foo.ts"));
-
         test.done();
     },
 

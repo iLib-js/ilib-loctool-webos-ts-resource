@@ -18,6 +18,6 @@
  */
 
 module.exports.files = [
-    "testTSResourceFile.js",
-    "testTSResourceFileType.js"
+    "testTSResourceFileType.js",
+    "testTSResourceFile.js"
 ];

@@ -89,6 +89,33 @@ TSResourceFile.prototype.getAll = function() {
 };
 
 /**
+ *
+ <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ko-KR" sourcelanguage="en-KR">
+<context>
+    <name>Test</name>
+    <message>
+        <location filename="Test.qml" line="7"/>
+        <location filename="Test.qml" line="15"/>
+        <source>Hello, World!</source>
+        <extracomment>1st
+----------
+3rd</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Hello>First!!</extra-Hello>
+    </message>
+ 
+</context>
+</TS>
+ */
+ 
+TSResourceFile.prototype.toXml = function() {
+    
+};
+
+
+/**
  * Add a resource to this file. The locale of the resource
  * should correspond to the locale of the file, and the
  * context of the resource should match the context of
@@ -197,44 +224,29 @@ TSResourceFile.prototype.getContent = function() {
 };
 
 /**
- * @private
- */
-TSResourceFile.prototype._calcLocalePath = function(locale) {
-    var fullPath = "";
-    var splitLocale = this.locale.getSpec().split("-");
-
-    if (this.baseLocale) {
-        fullPath = "/" + splitLocale[0];
-    } else {
-        fullPath += "/" + splitLocale.join("/");
-    }
-    return fullPath;
-}
-
-/**
  * Find the path for the resource file for the given project, context,
  * and locale.
  *
  * @param {String} locale the name of the locale in which the resource
  * file will reside
  * @param {String|undefined} flavor the name of the flavor if any
- * @return {String} the ios strings resource file path that serves the
- * given project, context, and locale.
+ * @return {String} resource file path
  */
 TSResourceFile.prototype.getResourceFilePath = function(locale, flavor) {
     locale = locale || this.locale;
     var dir, newPath, localePath;
-    var filename = "strings.json";
+    var projectId = this.project.options.id;
+    var filename = projectId +"_en.ts";
 
-    var projectType = this.project.options.projectType.split("-");
-    if (projectType[1] === "c" || projectType[1] === "cpp") {
-        filename = this.project.settings.resourceFileNames[projectType[1]];
+    if (this.baseLocale) {
+        filename = locale.getLanguage()+".ts";
+    } else {
+        filename = locale.getSpec().replace(/-/g, "_") +".ts";
     }
+    filename = projectId + "_" + filename;
 
-    localePath = this._calcLocalePath(locale);
-
-    dir = this.project.getResourceDirs("json")[0] || ".";
-    newPath = path.join(dir, localePath, filename);
+    dir = this.project.getResourceDirs("ts")[0] || ".";
+    newPath = path.join(dir, filename);
 
     logger.trace("Getting resource file path for locale " + locale + ": " + newPath);
     return newPath;
@@ -261,41 +273,6 @@ TSResourceFile.prototype.write = function() {
     } else {
         logger.debug("File " + this.pathName + " is not dirty. Skipping.");
     }
-};
-
-/**
- * Write the manifest file to disk.
- */
-TSResourceFile.prototype.writeManifest = function(filePath) {
-    logger.info("writing ilibmanifest.json file");
-    var manifest = {
-        files: []
-    };
-
-    if (!fs.existsSync(filePath)) return;
-
-    function walk(root, dir) {
-        var list = fs.readdirSync(path.join(root, dir));
-        list.forEach(function (file) {
-            var sourcePathRelative = path.join(dir, file);
-            var sourcePath = path.join(root, sourcePathRelative);
-            var stat = fs.statSync(sourcePath);
-            if (stat && stat.isDirectory()) {
-                walk(root, sourcePathRelative);
-            } else {
-                if (file.match(/\.json$/) && (file !== "ilibmanifest.json")) {
-                    manifest.files.push(sourcePathRelative);
-                }
-            }
-        });
-    }
-
-    walk(filePath, "");
-    for (var i=0; i < manifest.files.length; i++) {
-        console.log("list: ", manifest.files[i]);
-    }
-    var manifestFilePath = path.join(filePath, "ilibmanifest.json");
-    fs.writeFileSync(manifestFilePath, JSON.stringify(manifest), 'utf8');
 };
 
 /**
