@@ -95,6 +95,7 @@ module.exports.tsresourcefile = {
             p.getAPI().newResource({
                 type: "string",
                 project: "inputcommon",
+                pathName: "./Test.qml",
                 targetLocale: "de-DE",
                 key: "source text",
                 sourceLocale: "en-US",
@@ -104,6 +105,7 @@ module.exports.tsresourcefile = {
             p.getAPI().newResource({
                 type: "string",
                 project: "inputcommon",
+                pathName: "./Test1.qml",
                 targetLocale: "de-DE",
                 key: "more source text",
                 sourceLocale: "en-US",
@@ -113,6 +115,7 @@ module.exports.tsresourcefile = {
             p.getAPI().newResource({
                 type: "string",
                 project: "inputcommon",
+                pathName: "./Test1.qml",
                 targetLocale: "de-DE",
                 key: "yet more source text",
                 sourceLocale: "en-US",
@@ -139,28 +142,29 @@ module.exports.tsresourcefile = {
         var resource = p2.getAPI().newResource({
                 type: "string",
                 project: "inputcommon",
+                pathName: "./Test.qml",
                 targetLocale: "de-DE",
                 key: "source text",
+                pathName: "./src/Test.qml",
                 sourceLocale: "en-US",
                 source: "source text",
                 target: "Quellentext"
 
             });
-
+        tsrf.addResource(resource);
         test.equal(tsrf.getContent(),
-            '<?xml version="1.0" encoding="utf-8"?>\n' +
-            '    <!DOCTYPE TS>\n' +
-            '    <TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
-            '    "yet more source text": "noch mehr Quellentext"\n' +
-            '    <context>\n' +
-            '    <name></name>\n' +
-            '    <message>\n' +
-            '    <location filename="Test.qml" line="7"/>\n' +
-            '    <source></source>\n' +
-            '    <translation</translation>\n' +
-            '    </message>\n' +
-            '    </conatext> \n' +
-            '    </TS> \n'
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
+         '  <context>\n' +
+         '    <name>Test</name>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>source text</source>\n' +
+         '      <translation>Quellentext</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
         );
 
         test.done();
@@ -192,6 +196,7 @@ module.exports.tsresourcefile = {
             p2.getAPI().newResource({
                 type: "string",
                 project: "inputcommon",
+                pathName: "./Test.qml",
                 targetLocale: "de-DE",
                 key: "source text",
                 sourceLocale: "en-US",
@@ -200,7 +205,8 @@ module.exports.tsresourcefile = {
             }),
             p2.getAPI().newResource({
                 type: "string",
-                project: "webOSQML",
+                project: "inputcommon",
+                pathName: "./Test.qml",
                 targetLocale: "de-DE",
                 key: "more source text",
                 sourceLocale: "en-US",
@@ -228,6 +234,7 @@ module.exports.tsresourcefile = {
             p2.getAPI().newResource({
                 type: "string",
                 project: "inputcommon",
+                pathName: "./Test.qml",
                 targetLocale: "de-DE",
                 key: "source text",
                 sourceLocale: "en-US",
@@ -237,6 +244,7 @@ module.exports.tsresourcefile = {
             p2.getAPI().newResource({
                 type: "string",
                 project: "inputcommon",
+                pathName: "./Test.qml",
                 targetLocale: "de-DE",
                 key: "more source text",
                 sourceLocale: "en-US",
@@ -266,6 +274,7 @@ module.exports.tsresourcefile = {
             p2.getAPI().newResource({
                 type: "string",
                 project: "inputcommon",
+                pathName: "./Test.qml",
                 targetLocale: "de-DE",
                 key: "source text",
                 sourceLocale: "en-US",
@@ -284,6 +293,7 @@ module.exports.tsresourcefile = {
             p2.getAPI().newResource({
                 type: "string",
                 project: "inputcommon",
+                pathName: "./Test.qml",
                 targetLocale: "de-DE",
                 key: "yet more source text",
                 sourceLocale: "en-US",
