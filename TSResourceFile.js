@@ -21,7 +21,6 @@ var fs = require("fs");
 var path = require("path");
 var Locale = require("ilib/lib/Locale.js");
 var LocaleMatcher = require("ilib/lib/LocaleMatcher.js");
-var JSUtils = require("ilib/lib/JSUtils.js");
 var xml2json = require("xml2json");
 var PrettyData = require("pretty-data").pd;
 var log4js = require("log4js");
@@ -48,7 +47,6 @@ var TSResourceFile = function(props) {
 
     this.minimalLocale = new LocaleMatcher({locale: props.locale}).getLikelyLocaleMinimal().getSpec();
     langDefaultLocale = new LocaleMatcher({locale: this.locale.language}).getLikelyLocaleMinimal().getSpec();
-
     this.baseLocale = langDefaultLocale === this.minimalLocale;
 
     this.set = this.API.newTranslationSet(this.project && this.project.sourceLocale || "en-US");
