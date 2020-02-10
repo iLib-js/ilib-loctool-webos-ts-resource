@@ -166,10 +166,139 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-
         test.done();
     },
 
+    testTSResourceFileRightContents2: function(test) {
+        test.expect(2);
+
+        var tsrf = new TSResourceFile({
+            project: p,
+            locale: "de-DE"
+        });
+
+        test.ok(tsrf);
+        [
+            p2.getAPI().newResource({
+                type: "string",
+                project: "inputcommon",
+                pathName: "./Test.qml",
+                targetLocale: "de-DE",
+                key: "source text",
+                sourceLocale: "en-US",
+                source: "source text",
+                target: "Quellen text"
+            }),
+            p2.getAPI().newResource({
+                type: "string",
+                project: "inputcommon",
+                pathName: "./Test.qml",
+                targetLocale: "de-DE",
+                key: "more source text",
+                sourceLocale: "en-US",
+                source: "more source text",
+                target: "mehr Quellen text"
+            })
+        ].forEach(function(res) {
+            tsrf.addResource(res);
+        });
+
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
+         '  <context>\n' +
+         '    <name>Test</name>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>more source text</source>\n' +
+         '      <translation>mehr Quellen text</translation>\n' +
+         '    </message>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>source text</source>\n' +
+         '      <translation>Quellen text</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
+        );
+
+        test.done();
+    },
+    testTSResourceFileRightContents3: function(test) {
+        test.expect(2);
+
+        var tsrf = new TSResourceFile({
+            project: p2,
+            locale: "de-DE"
+        });
+
+        test.ok(tsrf);
+        [
+            p2.getAPI().newResource({
+                type: "string",
+                project: "quicksettings",
+                pathName: "./Test.qml",
+                targetLocale: "de-DE",
+                key: "source text",
+                sourceLocale: "en-US",
+                source: "source text",
+                target: "Quellen text"
+            }),
+            p2.getAPI().newResource({
+                type: "string",
+                project: "quicksettings",
+                targetLocale: "de-DE",
+                pathName: "./Test.qml",
+                key: "more source text",
+                sourceLocale: "en-US",
+                source: "more source text",
+                target: "mehr Quellen text"
+            }),
+            p2.getAPI().newResource({
+                type: "string",
+                project: "quicksettings",
+                pathName: "./Translation.qml",
+                targetLocale: "de-DE",
+                key: "yet more source text",
+                sourceLocale: "en-US",
+                source: "yet more source text",
+                target: "noch mehr Quellen text"
+            })
+        ].forEach(function(res) {
+            tsrf.addResource(res);
+        });
+
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
+         '  <context>\n' +
+         '    <name>Test</name>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>more source text</source>\n' +
+         '      <translation>mehr Quellen text</translation>\n' +
+         '    </message>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>source text</source>\n' +
+         '      <translation>Quellen text</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '  <context>\n' +
+         '    <name>Translation</name>\n' +
+         '    <message>\n' +
+         '      <location filename="Translation.qml"></location>\n' +
+         '      <source>yet more source text</source>\n' +
+         '      <translation>noch mehr Quellen text</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
+        );
+
+        test.done();
+    },
     testTSResourceFileGetContentsNoContent: function(test) {
         test.expect(2);
 
@@ -179,140 +308,11 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getContent(),'{}');
+        test.equal(tsrf.getContent(),'<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE" sourcelanguage="en-US"></TS>');
         test.done();
     },
 
-    testTSResourceFileEscapeDoubleQuotes: function(test) {
-        test.expect(2);
 
-        var tsrf = new TSResourceFile({
-            project: p,
-            locale: "de-DE"
-        });
-
-        test.ok(tsrf);
-        [
-            p2.getAPI().newResource({
-                type: "string",
-                project: "inputcommon",
-                pathName: "./Test.qml",
-                targetLocale: "de-DE",
-                key: "source text",
-                sourceLocale: "en-US",
-                source: "source text",
-                target: "Quellen\"text"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "inputcommon",
-                pathName: "./Test.qml",
-                targetLocale: "de-DE",
-                key: "more source text",
-                sourceLocale: "en-US",
-                source: "more source text",
-                target: "mehr Quellen\"text"
-            })
-        ].forEach(function(res) {
-            tsrf.addResource(res);
-        });
-
-        test.equal(tsrf.getContent(),"");
-        test.done();
-    },
-
-    testTSResourceFileDontEscapeSingleQuotes: function(test) {
-        test.expect(2);
-
-        var tsrf = new TSResourceFile({
-            project: p,
-            locale: "de-DE"
-        });
-
-        test.ok(tsrf);
-        [
-            p2.getAPI().newResource({
-                type: "string",
-                project: "inputcommon",
-                pathName: "./Test.qml",
-                targetLocale: "de-DE",
-                key: "source text",
-                sourceLocale: "en-US",
-                source: "source text",
-                target: "Quellen'text"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "inputcommon",
-                pathName: "./Test.qml",
-                targetLocale: "de-DE",
-                key: "more source text",
-                sourceLocale: "en-US",
-                source: "more source text",
-                target: "mehr Quellen'text"
-            })
-        ].forEach(function(res) {
-            tsrf.addResource(res);
-        });
-
-        test.equal(tsrf.getContent(),"");
-
-        test.done();
-    },
-
-    testTSResourceFileIdentifyResourceIds: function(test) {
-        test.expect(2);
-
-        var tsrf = new TSResourceFile({
-            project: p2,
-            locale: "de-DE"
-        });
-
-        test.ok(tsrf);
-
-        [
-            p2.getAPI().newResource({
-                type: "string",
-                project: "inputcommon",
-                pathName: "./Test.qml",
-                targetLocale: "de-DE",
-                key: "source text",
-                sourceLocale: "en-US",
-                source: "source text",
-                target: "Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "inputcommon",
-                targetLocale: "de-DE",
-                key: "more source text",
-                sourceLocale: "en-US",
-                source: "more source text",
-                target: "mehr Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "inputcommon",
-                pathName: "./Test.qml",
-                targetLocale: "de-DE",
-                key: "yet more source text",
-                sourceLocale: "en-US",
-                source: "yet more source text",
-                target: "noch mehr Quellentext"
-            })
-        ].forEach(function(res) {
-            tsrf.addResource(res);
-        });
-
-        var expected =
-            '';
-
-        var actual = tsrf.getContent();
-        diff(actual, expected);
-
-        test.equal(actual, expected);
-        test.done();
-    },
 
     testTSResourceFileGetResourceFilePathDefaultLocaleForLanguage: function(test) {
         test.expect(2);
@@ -323,7 +323,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/inputcommon_de.ts");
+        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_de.ts");
         test.done();
     },
 
@@ -336,7 +336,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/inputcommon_de.ts");
+        test.equal(tsrf.getResourceFilePath(), "inputcommon_de.ts");
         test.done();
     },
 
@@ -401,7 +401,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/inputcommon_zh.ts");
+        test.equal(tsrf.getResourceFilePath(), "inputcommon_zh.ts");
         test.done();
     },
 
@@ -475,7 +475,7 @@ module.exports.tsresourcefile = {
 
         var tsrf = new TSResourceFile({
             project: p2,
-            locale: "de-DE"
+            locale: "ko-KR"
         });
 
         test.ok(tsrf);
@@ -484,7 +484,7 @@ module.exports.tsresourcefile = {
             p2.getAPI().newResource({
                 type: "string",
                 project: "webOSQML",
-                targetLocale: "de-DE",
+                targetLocale: "ko-KR",
                 key: "source text",
                 sourceLocale: "en-US",
                 source: "source text",
@@ -493,7 +493,7 @@ module.exports.tsresourcefile = {
             p2.getAPI().newResource({
                 type: "string",
                 project: "webOSQML",
-                targetLocale: "de-DE",
+                targetLocale: "ko-KR",
                 key: "more source text",
                 sourceLocale: "en-US",
                 source: "more source text",
@@ -502,7 +502,7 @@ module.exports.tsresourcefile = {
             p2.getAPI().newResource({
                 type: "string",
                 project: "webOSQML",
-                targetLocale: "de-DE",
+                targetLocale: "ko-KR",
                 key: "yet more source text",
                 sourceLocale: "en-US",
                 source: "yet more source text",
@@ -512,335 +512,9 @@ module.exports.tsresourcefile = {
             tsrf.addResource(res);
         });
 
-        // should use the default locale spec in the first line
-        var expected = '';
-
+        var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="ko-KR" sourcelanguage="en-US"></TS>';
         var actual = tsrf.getContent();
-        diff(actual, expected);
-
-        test.equal(actual, expected);
-        test.done();
-    },
-
-    testTSResourceFileGetContentDefaultLocaleNoDefaultsAvailable: function(test) {
-        test.expect(2);
-
-        var customP = new CustomProject({
-            id: "webOSQML",
-            sourceLocale: "en-US",
-            resourceDirs: {
-                "json": "localized_json"
-            }
-        }, "./testfiles", {
-            locales:["en-GB", "de-DE", "de-AT"],
-            identify: true
-        });
-
-        var tsrf = new TSResourceFile({
-            project: customP,
-            locale: "de-DE"
-        });
-
-        test.ok(tsrf);
-
-        [
-            customP.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "de-DE",
-                key: "source text",
-                sourceLocale: "en-US",
-                source: "source text",
-                target: "Quellentext"
-            }),
-            customP.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "de-DE",
-                key: "more source text",
-                sourceLocale: "en-US",
-                source: "more source text",
-                target: "mehr Quellentext"
-            }),
-            customP.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "de-DE",
-                key: "yet more source text",
-                sourceLocale: "en-US",
-                source: "yet more source text",
-                target: "noch mehr Quellentext"
-            })
-        ].forEach(function(res) {
-            tsrf.addResource(res);
-        });
-
-        // should use the full locale spec in the first line
-        var expected = '';
-
-        var actual = tsrf.getContent();
-        diff(actual, expected);
-
-        test.equal(actual, expected);
-        test.done();
-    },
-
-    testTSResourceFileGetContentNonDefaultLocale: function(test) {
-        test.expect(2);
-
-        var tsrf = new TSResourceFile({
-            project: p2,
-            locale: "de-AT"
-        });
-
-        test.ok(tsrf);
-
-        [
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "de-AT",
-                key: "source text",
-                sourceLocale: "en-US",
-                source: "source text",
-                target: "Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "de-AT",
-                key: "more source text",
-                sourceLocale: "en-US",
-                source: "more source text",
-                target: "mehr Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "de-AT",
-                key: "yet more source text",
-                sourceLocale: "en-US",
-                source: "yet more source text",
-                target: "noch mehr Quellentext"
-            })
-        ].forEach(function(res) {
-            tsrf.addResource(res);
-        });
-
-        // should use the full locale spec in the first line
-        var expected = '';
-
-        var actual = tsrf.getContent();
-        diff(actual, expected);
-
-        test.equal(actual, expected);
-        test.done();
-    },
-
-    testTSResourceFileGetContentDefaultLocaleZH: function(test) {
-        test.expect(2);
-
-        var tsrf = new TSResourceFile({
-            project: p2,
-            locale: "zh-Hans-CN"
-        });
-
-        test.ok(tsrf);
-
-        [
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "zh-Hans-CN",
-                key: "source text",
-                sourceLocale: "en-US",
-                source: "source text",
-                target: "Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "zh-Hans-CN",
-                key: "more source text",
-                sourceLocale: "en-US",
-                source: "more source text",
-                target: "mehr Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "zh-Hans-CN",
-                key: "yet more source text",
-                sourceLocale: "en-US",
-                source: "yet more source text",
-                target: "noch mehr Quellentext"
-            })
-        ].forEach(function(res) {
-            tsrf.addResource(res);
-        });
-
-        // should use the default locale spec in the first line
-        var expected = '';
-
-        var actual = tsrf.getContent();
-        diff(actual, expected);
-
-        test.equal(actual, expected);
-        test.done();
-    },
-
-    testTSResourceFileGetContentDefaultLocaleZH2: function(test) {
-        test.expect(2);
-
-        var tsrf = new TSResourceFile({
-            project: p2,
-            locale: "zh-Hant-HK"
-        });
-
-        test.ok(tsrf);
-
-        [
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "zh-Hant-HK",
-                key: "source text",
-                sourceLocale: "en-US",
-                source: "source text",
-                target: "Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "zh-Hant-HK",
-                key: "more source text",
-                sourceLocale: "en-US",
-                source: "more source text",
-                target: "mehr Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "zh-Hant-HK",
-                key: "yet more source text",
-                sourceLocale: "en-US",
-                source: "yet more source text",
-                target: "noch mehr Quellentext"
-            })
-        ].forEach(function(res) {
-            tsrf.addResource(res);
-        });
-
-        // should use the default locale spec in the first line
-        var expected = '';
-
-        var actual = tsrf.getContent();
-        diff(actual, expected);
-
-        test.equal(actual, expected);
-        test.done();
-    },
-
-    testTSResourceFileGetContentNonDefaultLocaleZH: function(test) {
-        test.expect(2);
-
-        var tsrf = new TSResourceFile({
-            project: p2,
-            locale: "zh-Hans-SG"
-        });
-
-        test.ok(tsrf);
-
-        [
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "zh-Hans-SG",
-                key: "source text",
-                sourceLocale: "en-US",
-                source: "source text",
-                target: "Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "zh-Hans-SG",
-                key: "more source text",
-                sourceLocale: "en-US",
-                source: "more source text",
-                target: "mehr Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "zh-Hans-SG",
-                key: "yet more source text",
-                sourceLocale: "en-US",
-                source: "yet more source text",
-                target: "noch mehr Quellentext"
-            })
-        ].forEach(function(res) {
-            tsrf.addResource(res);
-        });
-
-        // should use the default locale spec in the first line
-        var expected = '';
-
-        var actual = tsrf.getContent();
-        diff(actual, expected);
-
-        test.equal(actual, expected);
-        test.done();
-    },
-
-    testTSResourceFileGetContentNonDefaultLocaleZH2: function(test) {
-        test.expect(2);
-
-        var tsrf = new TSResourceFile({
-            project: p2,
-            locale: "zh-Hant-TW"
-        });
-
-        test.ok(tsrf);
-
-        [
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "zh-Hant-TW",
-                key: "source text",
-                sourceLocale: "en-US",
-                source: "source text",
-                target: "Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "zh-Hant-TW",
-                key: "more source text",
-                sourceLocale: "en-US",
-                source: "more source text",
-                target: "mehr Quellentext"
-            }),
-            p2.getAPI().newResource({
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "zh-Hant-TW",
-                key: "yet more source text",
-                sourceLocale: "en-US",
-                source: "yet more source text",
-                target: "noch mehr Quellentext"
-            })
-        ].forEach(function(res) {
-            tsrf.addResource(res);
-        });
-
-        // should use the default locale spec in the first line
-        var expected = '';
-
-        var actual = tsrf.getContent();
-        diff(actual, expected);
-
+        
         test.equal(actual, expected);
         test.done();
     },
@@ -888,7 +562,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the default locale spec in the first line
-        var expected = '';
+        var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE-ASDF" sourcelanguage="en-US"></TS>';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -940,7 +614,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the default locale spec in the first line
-        var expected = '';
+        var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE-ASDF" sourcelanguage="en-US"></TS>';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -955,16 +629,16 @@ module.exports.tsresourcefile = {
                     "es-ES","et-EE","fa-IR","fa-AF","fr-FR","fr-CA", "zh-Hans-CN","zh-Hant-HK","zh-Hant-TW"];
 
         var expected = [
-            "locales/en.ts","locales/en_GB.ts",
-            "locales/en_AU.ts","locales/es_CO.ts",
-            "locales/es.ts","locales/et.ts",
-            "locales/fa.ts","locales/fa_AF.ts",
-            "locales/fr.ts","locales/fr_CA.ts",
-            "locales/zh.ts","locales/zh_Hant_HK.ts",
-            "locales/zh_Hant_TW.ts"
+            "locales/quicksettings_en.ts","locales/quicksettings_en_GB.ts",
+            "locales/quicksettings_en_AU.ts","locales/quicksettings_es_CO.ts",
+            "locales/quicksettings_es.ts","locales/quicksettings_et.ts",
+            "locales/quicksettings_fa.ts","locales/quicksettings_fa_AF.ts",
+            "locales/quicksettings_fr.ts","locales/quicksettings_fr_CA.ts",
+            "locales/quicksettings_zh.ts","locales/quicksettings_zh_Hant_HK.ts",
+            "locales/quicksettings_zh_Hant_TW.ts"
         ];
         for (var i=0; i<locales.length;i++) {
-            jsrf = new TSResourceFile({
+            tsrf = new TSResourceFile({
                 project: p2,
                 locale: locales[i]
             });

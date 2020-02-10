@@ -21,6 +21,7 @@ var fs = require("fs");
 var path = require("path");
 var Locale = require("ilib/lib/Locale.js");
 var LocaleMatcher = require("ilib/lib/LocaleMatcher.js");
+var JSUtils = require("ilib/lib/JSUtils.js");
 var xml2json = require("xml2json");
 var PrettyData = require("pretty-data").pd;
 var log4js = require("log4js");
@@ -101,33 +102,6 @@ TSResourceFile.prototype.getFileName = function(pathName) {
 };
 
 /**
- *
- <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ko-KR" sourcelanguage="en-KR">
-<context>
-    <name>Test</name>
-    <message>
-        <location filename="Test.qml" line="7"/>
-        <location filename="Test.qml" line="15"/>
-        <source>Hello, World!</source>
-        <extracomment>1st
-----------
-3rd</extracomment>
-        <translation type="unfinished"></translation>
-        <extra-Hello>First!!</extra-Hello>
-    </message>
- 
-</context>
-</TS>
- */
- 
-TSResourceFile.prototype.toXml = function() {
-    
-};
-
-
-/**
  * Add a resource to this file. The locale of the resource
  * should correspond to the locale of the file, and the
  * context of the resource should match the context of
@@ -193,7 +167,8 @@ TSResourceFile.prototype.getDefaultSpec = function() {
  * @returns {String} the content of the resource file
  */
 TSResourceFile.prototype.getContent = function() {
-    var json = {};
+    var content = {}, json = {};
+    var fileList = [], messageList = [], contextList = [];
 
     if (this.set.isDirty()) {
         var resources = this.set.getAll();
@@ -204,34 +179,51 @@ TSResourceFile.prototype.getContent = function() {
         });
 
         for (var j = 0; j < resources.length; j++) {
+
             var resource = resources[j];
             var filename, fileContext;
+
+            if (content["context"] === undefined) {
+                content["context"] = {};
+            }
+
             if (resource.getSource() && resource.getTarget()) {
                 if (clean(resource.getSource()) !== clean(resource.getTarget())) {
                     logger.trace("writing translation for " + resource.getKey() + " as " + resource.getTarget());
 
                     filename = this.getFileName(resource.getPath());
-                    fileContext = json["TS"] = {
-                        "version": "2.1",
-                        "language": this.locale.getSpec(),
-                        "sourcelanguage": "en-US",
-                        "context": {
+
+                    var messageObj = {
+                        "location" : {
+                            "filename": filename,
+                        },
+                        "source": {
+                            "$t": resource.getSource()
+                        },
+                        "translation": {
+                            "$t": resource.getTarget()
+                        }
+                    };
+
+                    if (fileList.indexOf(filename) !== -1) {
+                        for (var i=0; i< content["context"].length; i++) {
+                            if (content["context"][i]["name"]["$t"] === filename.replace(".qml", "")) {
+                                content["context"][i]["message"].push(messageObj);
+                                break;
+                            }
+                        }
+                    } else {
+                        fileList.push(filename);
+                        var contextObj = {
                             "name" :{
                                 "$t": filename.replace(".qml", "")
                             },
-                            "message": {
-                                "location" : {
-                                    "filename": filename,
-                                },
-                                "source": {
-                                    "$t": resource.getSource()
-                                },
-                                "translation": {
-                                    "$t": resource.getTarget()
-                                }
-                            }
+                            "message": []
                         }
-                    };
+                        contextObj["message"].push(messageObj);
+                        contextList.push(contextObj);
+                        content["context"] = contextList;
+                    }
                 } else {
                     logger.trace("skipping translation with no change");
                 }
@@ -247,11 +239,20 @@ TSResourceFile.prototype.getContent = function() {
     if (settings && settings.TSResourceFile && settings.TSResourceFile.prefix) {
         output = settings.TSResourceFile.prefix;
     }
+
+    var tsContents = {
+        "version": "2.1",
+        "language": this.locale.getSpec(),
+        "sourcelanguage": "en-US",
+        "context": content["context"]
+    }
+
+    json["TS"] = tsContents;
     
     // take care of double-escaped unicode chars
     //output = output.replace(/\\\\u/g, "\\u");
-    var xml = '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE TS>' + xml2json.toXml(json, {sanitize: true});
 
+    var xml = '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE TS>' + xml2json.toXml(json, {sanitize: true});
     return PrettyData.xml(xml);
 };
 
