@@ -1,7 +1,7 @@
 {
     "name": "ilib-loctool-webos-ts-resource",
     "version": "1.0.0",
-    "main": "./TSFileType.js",
+    "main": "./TSResourceFileType.js",
     "description": "A loctool plugin that knows how to process ts resource files",
     "license": "Apache-2.0",
     "keywords": [
@@ -51,7 +51,6 @@
         "ilib": "^14.4.0",
         "log4js": "^2.11.0",
         "pretty-data": "^0.40.0",
-        "xml-js": "^1.6.11",
         "xml2json": "^0.11.2"
     },
     "devDependencies": {
