@@ -142,10 +142,9 @@ module.exports.tsresourcefile = {
         var resource = p2.getAPI().newResource({
                 type: "string",
                 project: "inputcommon",
-                pathName: "./Test.qml",
+                pathName: "./src/Hello.qml",
                 targetLocale: "de-DE",
                 key: "source text",
-                pathName: "./src/Test.qml",
                 sourceLocale: "en-US",
                 source: "source text",
                 target: "Quellentext"
@@ -157,9 +156,9 @@ module.exports.tsresourcefile = {
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
          '  <context>\n' +
-         '    <name>Test</name>\n' +
+         '    <name>Hello</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Hello.qml"></location>\n' +
          '      <source>source text</source>\n' +
          '      <translation>Quellentext</translation>\n' +
          '    </message>\n' +

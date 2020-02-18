@@ -203,6 +203,12 @@ TSResourceFile.prototype.getContent = function() {
                         }
                     };
 
+                    if (typeof (resource.getComment()) !== "undefined") {
+                        messageObj["extracomment"] = {
+                            "$t": resource.getComment()
+                        }
+                    }
+
                     if (fileList.indexOf(filename) !== -1) {
                         for (var i=0; i< content["context"].length; i++) {
                             if (content["context"][i]["name"]["$t"] === filename.replace(".qml", "")) {
