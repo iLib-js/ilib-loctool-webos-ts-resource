@@ -333,7 +333,7 @@ module.exports.tsresourcefile = {
                 project: "inputcommon",
                 pathName: "./Test2.qml",
                 targetLocale: "de-DE",
-                key: "more source text",
+                key: "source text",
                 sourceLocale: "en-US",
                 source: "source text",
                 target: "Quellen text"
