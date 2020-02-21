@@ -20,6 +20,7 @@
 if (!TSResourceFile) {
     var TSResourceFile = require("../TSResourceFile.js");
     var CustomProject = require("loctool/lib/CustomProject.js");
+    var ContextResourceString = require("loctool/lib/ContextResourceString.js");
 }
 
 function diff(a, b) {
@@ -91,8 +92,9 @@ module.exports.tsresourcefile = {
         test.ok(tsrf);
         test.ok(!tsrf.isDirty());
 
+
         [
-            p.getAPI().newResource({
+            {
                 type: "string",
                 project: "inputcommon",
                 pathName: "./Test.qml",
@@ -101,8 +103,8 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "source text",
                 target: "Quellentext"
-            }),
-            p.getAPI().newResource({
+            },
+            {
                 type: "string",
                 project: "inputcommon",
                 pathName: "./Test1.qml",
@@ -111,8 +113,8 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "more source text",
                 target: "mehr Quellentext"
-            }),
-            p.getAPI().newResource({
+            },
+            {
                 type: "string",
                 project: "inputcommon",
                 pathName: "./Test1.qml",
@@ -121,9 +123,10 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "yet more source text",
                 target: "noch mehr Quellentext"
-            })
+            }
         ].forEach(function(res) {
-            tsrf.addResource(res);
+            var resource = new ContextResourceString(res);
+            tsrf.addResource(resource);
         });
 
         test.ok(tsrf.isDirty());
@@ -139,7 +142,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        var resource = p2.getAPI().newResource({
+        var resource = new ContextResourceString({
                 type: "string",
                 project: "inputcommon",
                 pathName: "./src/Hello.qml",
@@ -147,7 +150,8 @@ module.exports.tsresourcefile = {
                 key: "source text",
                 sourceLocale: "en-US",
                 source: "source text",
-                target: "Quellentext"
+                target: "Quellentext",
+                context: "Hello"
 
             });
         tsrf.addResource(resource);
@@ -178,7 +182,7 @@ module.exports.tsresourcefile = {
 
         test.ok(tsrf);
         [
-            p2.getAPI().newResource({
+            {
                 type: "string",
                 project: "inputcommon",
                 pathName: "./Test.qml",
@@ -187,8 +191,8 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "source text",
                 target: "Quellen text"
-            }),
-            p2.getAPI().newResource({
+            },
+            {
                 type: "string",
                 project: "inputcommon",
                 pathName: "./Test.qml",
@@ -197,9 +201,10 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "more source text",
                 target: "mehr Quellen text"
-            })
+            }
         ].forEach(function(res) {
-            tsrf.addResource(res);
+            var resource = new ContextResourceString(res);
+            tsrf.addResource(resource);
         });
 
         test.equal(tsrf.getContent(),
@@ -234,7 +239,7 @@ module.exports.tsresourcefile = {
 
         test.ok(tsrf);
         [
-            p2.getAPI().newResource({
+            {
                 type: "string",
                 project: "quicksettings",
                 pathName: "./Test.qml",
@@ -243,8 +248,8 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "source text",
                 target: "Quellen text"
-            }),
-            p2.getAPI().newResource({
+            },
+            {
                 type: "string",
                 project: "quicksettings",
                 targetLocale: "de-DE",
@@ -253,8 +258,8 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "more source text",
                 target: "mehr Quellen text"
-            }),
-            p2.getAPI().newResource({
+            },
+            {
                 type: "string",
                 project: "quicksettings",
                 pathName: "./Translation.qml",
@@ -263,9 +268,10 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "yet more source text",
                 target: "noch mehr Quellen text"
-            })
+            }
         ].forEach(function(res) {
-            tsrf.addResource(res);
+            var resource = new ContextResourceString(res);
+            tsrf.addResource(resource);
         });
 
         test.equal(tsrf.getContent(),
@@ -308,7 +314,7 @@ module.exports.tsresourcefile = {
 
         test.ok(tsrf);
         [
-            p2.getAPI().newResource({
+            {
                 type: "string",
                 project: "inputcommon",
                 pathName: "./Test.qml",
@@ -316,9 +322,10 @@ module.exports.tsresourcefile = {
                 key: "source text",
                 sourceLocale: "en-US",
                 source: "source text",
-                target: "Quellen text"
-            }),
-            p2.getAPI().newResource({
+                target: "Quellen text",
+                context: "Test"
+            },
+            {
                 type: "string",
                 project: "inputcommon",
                 pathName: "./Test.qml",
@@ -326,9 +333,10 @@ module.exports.tsresourcefile = {
                 key: "more source text",
                 sourceLocale: "en-US",
                 source: "more source text",
-                target: "mehr Quellen text"
-            }),
-            p2.getAPI().newResource({
+                target: "mehr Quellen text",
+                context: "Test"
+            },
+            {
                 type: "string",
                 project: "inputcommon",
                 pathName: "./Test2.qml",
@@ -336,24 +344,18 @@ module.exports.tsresourcefile = {
                 key: "source text",
                 sourceLocale: "en-US",
                 source: "source text",
-                target: "Quellen text"
-            })
+                target: "Quellen text",
+                context: "Test2"
+            }
         ].forEach(function(res) {
-            tsrf.addResource(res);
+            var resource = new ContextResourceString(res);
+            tsrf.addResource(resource);
         });
 
         test.equal(tsrf.getContent(),
          '<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
-         '  <context>\n' +
-         '    <name>Test2</name>\n' +
-         '    <message>\n' +
-         '      <location filename="Test2.qml"></location>\n' +
-         '      <source>source text</source>\n' +
-         '      <translation>Quellen text</translation>\n' +
-         '    </message>\n' +
-         '  </context>\n' +
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
@@ -367,9 +369,16 @@ module.exports.tsresourcefile = {
          '      <translation>Quellen text</translation>\n' +
          '    </message>\n' +
          '  </context>\n' +
+         '  <context>\n' +
+         '    <name>Test2</name>\n' +
+         '    <message>\n' +
+         '      <location filename="Test2.qml"></location>\n' +
+         '      <source>source text</source>\n' +
+         '      <translation>Quellen text</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
          '</TS>'
         );
-
         test.done();
     },
 
@@ -385,8 +394,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getContent(),'<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE" sourcelanguage="en-US"></TS>');
         test.done();
     },
-
-
 
     testTSResourceFileGetResourceFilePathDefaultLocaleForLanguage: function(test) {
         test.expect(2);
@@ -555,7 +562,7 @@ module.exports.tsresourcefile = {
         test.ok(tsrf);
 
         [
-            p2.getAPI().newResource({
+            {
                 type: "string",
                 project: "webOSQML",
                 targetLocale: "ko-KR",
@@ -563,8 +570,8 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "source text",
                 target: "Quellentext"
-            }),
-            p2.getAPI().newResource({
+            },
+            {
                 type: "string",
                 project: "webOSQML",
                 targetLocale: "ko-KR",
@@ -572,8 +579,8 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "more source text",
                 target: "mehr Quellentext"
-            }),
-            p2.getAPI().newResource({
+            },
+            {
                 type: "string",
                 project: "webOSQML",
                 targetLocale: "ko-KR",
@@ -581,9 +588,10 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "yet more source text",
                 target: "noch mehr Quellentext"
-            })
+            }
         ].forEach(function(res) {
-            tsrf.addResource(res);
+            var resource = new ContextResourceString(res);
+            tsrf.addResource(resource);
         });
 
         var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="ko-KR" sourcelanguage="en-US"></TS>';
@@ -604,7 +612,7 @@ module.exports.tsresourcefile = {
         test.ok(tsrf);
 
         [
-            p2.getAPI().newResource({
+            {
                 type: "string",
                 project: "webOSQML",
                 targetLocale: "de-DE-ASDF",
@@ -612,8 +620,8 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "source text",
                 target: "Quellentext"
-            }),
-            p2.getAPI().newResource({
+            },
+            {
                 type: "string",
                 project: "webOSQML",
                 targetLocale: "de-DE-ASDF",
@@ -621,8 +629,8 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "more source text",
                 target: "mehr Quellentext"
-            }),
-            p2.getAPI().newResource({
+            },
+            {
                 type: "string",
                 project: "webOSQML",
                 targetLocale: "de-DE-ASDF",
@@ -630,9 +638,10 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "yet more source text",
                 target: "noch mehr Quellentext"
-            })
+            }
         ].forEach(function(res) {
-            tsrf.addResource(res);
+            var resource = new ContextResourceString(res);
+            tsrf.addResource(resource);
         });
 
         // should use the default locale spec in the first line
@@ -656,7 +665,7 @@ module.exports.tsresourcefile = {
         test.ok(tsrf);
 
         [
-            p2.getAPI().newResource({
+            {
                 type: "string",
                 project: "webOSQML",
                 targetLocale: "de-DE-ASDF",
@@ -664,8 +673,8 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "source text",
                 target: "Quellentext"
-            }),
-            p2.getAPI().newResource({
+            },
+            {
                 type: "string",
                 project: "webOSQML",
                 targetLocale: "de-DE-ASDF",
@@ -673,8 +682,8 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "more source text",
                 target: "mehr Quellentext"
-            }),
-            p2.getAPI().newResource({
+            },
+            {
                 type: "string",
                 project: "webOSQML",
                 targetLocale: "de-DE-ASDF",
@@ -682,9 +691,10 @@ module.exports.tsresourcefile = {
                 sourceLocale: "en-US",
                 source: "yet more source text",
                 target: "noch mehr Quellentext"
-            })
+            }
         ].forEach(function(res) {
-            tsrf.addResource(res);
+            var resource = new ContextResourceString(res);
+            tsrf.addResource(resource);
         });
 
         // should use the default locale spec in the first line

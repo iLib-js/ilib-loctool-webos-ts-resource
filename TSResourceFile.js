@@ -177,7 +177,6 @@ TSResourceFile.prototype.getContent = function() {
         });
 
         for (var j = 0; j < resources.length; j++) {
-
             var resource = resources[j];
             var filename, fileContext;
 
@@ -216,6 +215,7 @@ TSResourceFile.prototype.getContent = function() {
                                 break;
                             }
                         }
+
                     } else {
                         fileList.push(filename);
                         var contextObj = {
