@@ -266,10 +266,9 @@ TSResourceFile.prototype.getContent = function() {
  *
  * @param {String} locale the name of the locale in which the resource
  * file will reside
- * @param {String|undefined} flavor the name of the flavor if any
  * @return {String} resource file path
  */
-TSResourceFile.prototype.getResourceFilePath = function(locale, flavor) {
+TSResourceFile.prototype.getResourceFilePath = function(locale) {
     locale = locale || this.locale;
     var dir, newPath, localePath;
     var projectId = this.project.options.id;
