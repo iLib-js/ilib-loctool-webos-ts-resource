@@ -146,19 +146,6 @@ function clean(str) {
 }
 
 /**
- * @private
- */
-TSResourceFile.prototype.getDefaultSpec = function() {
-    if (!this.defaultSpec) {
-        this.defaultSpec = this.project.settings.localeDefaults ?
-            this.API.utils.getLocaleDefault(this.locale, this.flavor, this.project.settings.localeDefaults) :
-            this.locale.getSpec();
-    }
-
-    return this.defaultSpec;
-};
-
-/**
  * Generate the content of the resource file.
  *
  * @private
