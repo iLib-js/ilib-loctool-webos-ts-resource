@@ -3,9 +3,23 @@ ilib-loctool-webos-ts-resource is a plugin for the loctool that
 allows it to read and localize ts resource files. This plugins is optimized for webOS platform.
 
 ## Release Notes
-
 v1.0.0
-*
+* Implemented to generate TS format resource file.
+  Here's simple output style
+   ~~~~
+   <?xml version="1.0" encoding="utf-8"?>
+   <!DOCTYPE TS>
+   <TS version="2.1" language="ko-KR" sourcelanguage="en-US">
+   <context>
+    <name>Intro</name>
+       <message>
+           <location filename="Intro.qml"></location>
+           <source>Hello!</source>
+           <translation>안녕</translation>
+       </message>
+   </context>
+   </TS
+   ~~~~
 
 ## License
 
