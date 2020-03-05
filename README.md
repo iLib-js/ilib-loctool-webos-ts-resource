@@ -4,8 +4,8 @@ allows it to read and localize ts resource files. This plugins is optimized for 
 
 ## Release Notes
 v1.0.0
-* Implemented to generate TS format resource file.
-  Here's simple output style
+* Implemented to generate [TS](https://doc.qt.io/qt-5/linguist-ts-file-format.html) style resource file.
+  Here's simple output example.
    ~~~~
    <?xml version="1.0" encoding="utf-8"?>
    <!DOCTYPE TS>
