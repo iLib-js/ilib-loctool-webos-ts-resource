@@ -172,7 +172,8 @@ TSResourceFile.prototype.getContent = function() {
             }
 
             if (resource.getSource() && resource.getTarget()) {
-                if (clean(resource.getSource()) !== clean(resource.getTarget())) {
+                if (clean(resource.getSource()) !== clean(resource.getTarget()) ||
+                    clean(resource.getKey()) !== clean(resource.getTarget()) ) {
                     logger.trace("writing translation for " + resource.getKey() + " as " + resource.getTarget());
 
                     filename = this.getFileName(resource.getPath());
@@ -183,11 +184,17 @@ TSResourceFile.prototype.getContent = function() {
                         },
                         "source": {
                             "$t": resource.getSource()
-                        },
-                        "translation": {
-                            "$t": resource.getTarget()
                         }
                     };
+
+                    if (resource.getSource() !== resource.getKey()) {
+                        messageObj["comment"] = {
+                            "$t": resource.getKey()
+                        }
+                    }
+                    messageObj["translation"] = {
+                        "$t": resource.getTarget()
+                    }
 
                     if (typeof (resource.getComment()) !== "undefined") {
                         messageObj["extracomment"] = {
