@@ -19,10 +19,7 @@
 
 var fs = require("fs");
 var path = require("path");
-var ilib = require("ilib");
-var Locale = require("ilib/lib/Locale.js");
 var log4js = require("log4js");
-var FileType = require("loctool/lib/FileType.js");
 var TSResourceFile = require("./TSResourceFile.js");
 var logger = log4js.getLogger("loctool.plugin.TSResourceFileType");
 
@@ -32,18 +29,17 @@ var logger = log4js.getLogger("loctool.plugin.TSResourceFileType");
  * @param {Project} project that this type is in
  */
 var TSResourceFileType = function(project) {
-    this.parent.call(this, project);
     this.type = "ts";
     this.datatype = "ts";
     this.project = project;
-    this.resourceFiles = {};
-    this.API = project.getAPI();
     this.extensions = [".ts"];
-};
+    this.resourceFiles = {};
 
-TSResourceFileType.prototype = new FileType();
-TSResourceFileType.prototype.parent = FileType;
-TSResourceFileType.prototype.constructor = TSResourceFileType;
+    this.API = project.getAPI();
+    this.extracted = this.API.newTranslationSet(project.getSourceLocale());
+    this.newres = this.API.newTranslationSet(project.getSourceLocale());
+    this.pseudo = this.API.newTranslationSet(project.getSourceLocale());
+};
 
 /**
  * Return true if this file type handles the type of file in the
@@ -125,24 +121,16 @@ TSResourceFileType.prototype.getResourceFile = function(locale) {
 };
 
 /**
- * Ensure that all resources collected so far have a pseudo translation.
+ * Return the translation set containing all of the extracted
+ * resources for all instances of this type of file. This includes
+ * all new strings and all existing strings. If it was extracted
+ * from a source file, it should be returned here.
+ *
+ * @returns {TranslationSet} the set containing all of the
+ * extracted resources
  */
-TSResourceFileType.prototype.generatePseudo = function(locale, pb) {
-    var resources = this.extracted.getBy({
-        sourceLocale: pb.getSourceLocale()
-    });
-    logger.trace("Found " + resources.length + " source resources for " + pb.getSourceLocale());
-    var resource;
-
-    resources.forEach(function(resource) {
-        if (resource && resource.getKey() !== "app_id" && resource.getKey() !== "live_sdk_client_id") {
-            logger.trace("Generating pseudo for " + resource.getKey());
-            var res = resource.generatePseudo(locale, pb);
-            if (res && res.getSource() !== res.getTarget()) {
-                this.pseudo.add(res);
-            }
-        }
-    }.bind(this));
+TSResourceFileType.prototype.getExtracted = function() {
+    return this.extracted;
 };
 
 TSResourceFileType.prototype.getDataType = function() {

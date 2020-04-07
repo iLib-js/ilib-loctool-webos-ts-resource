@@ -183,11 +183,17 @@ TSResourceFile.prototype.getContent = function() {
                         },
                         "source": {
                             "$t": resource.getSource()
-                        },
-                        "translation": {
-                            "$t": resource.getTarget()
                         }
                     };
+
+                    if (resource.getSource() !== resource.getKey()) {
+                        messageObj["comment"] = {
+                            "$t": resource.getKey()
+                        }
+                    }
+                    messageObj["translation"] = {
+                        "$t": resource.getTarget()
+                    }
 
                     if (typeof (resource.getComment()) !== "undefined") {
                         messageObj["extracomment"] = {
