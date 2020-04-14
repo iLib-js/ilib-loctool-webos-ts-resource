@@ -500,6 +500,65 @@ module.exports.tsresourcefile = {
         );
         test.done();
     },
+    testTSResourceFileRightContentsDupkeys: function(test) {
+        test.expect(2);
+
+        var tsrf = new TSResourceFile({
+            project: p,
+            locale: "de-DE"
+        });
+
+        test.ok(tsrf);
+        [
+            {
+                type: "string",
+                project: "inputcommon",
+                pathName: "./Test.qml",
+                targetLocale: "de-DE",
+                key: "duplicated keys",
+                sourceLocale: "en-US",
+                source: "source text",
+                target: "Quellen text"
+            },
+            {
+                type: "string",
+                project: "inputcommon",
+                pathName: "./Test.qml",
+                targetLocale: "de-DE",
+                key: "duplicated keys",
+                sourceLocale: "en-US",
+                source: "more source text",
+                target: "mehr Quellen text"
+            }
+        ].forEach(function(res) {
+            var resource = new ContextResourceString(res);
+            tsrf.addResource(resource);
+        });
+
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
+         '  <context>\n' +
+         '    <name>Test</name>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>source text</source>\n' +
+         '      <comment>duplicated keys</comment>\n' +
+         '      <translation>Quellen text</translation>\n' +
+         '    </message>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>more source text</source>\n' +
+         '      <comment>duplicated keys</comment>\n' +
+         '      <translation>mehr Quellen text</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
+        );
+
+        test.done();
+    },
 
     testTSResourceFileGetContentsNoContent: function(test) {
         test.expect(2);
