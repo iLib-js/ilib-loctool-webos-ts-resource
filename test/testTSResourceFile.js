@@ -20,7 +20,7 @@
 if (!TSResourceFile) {
     var TSResourceFile = require("../TSResourceFile.js");
     var CustomProject = require("loctool/lib/CustomProject.js");
-    var ContextResourceString = require("loctool/lib/ContextResourceString.js");
+    var SourceContextResourceString = require("loctool/lib/SourceContextResourceString.js");
 }
 
 function diff(a, b) {
@@ -125,7 +125,7 @@ module.exports.tsresourcefile = {
                 target: "noch mehr Quellentext"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -141,7 +141,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        var resource = new ContextResourceString({
+        var resource = new SourceContextResourceString({
                 type: "string",
                 project: "inputcommon",
                 pathName: "./src/Hello.qml",
@@ -182,7 +182,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        var resource = new ContextResourceString({
+        var resource = new SourceContextResourceString({
                 type: "string",
                 project: "inputcommon",
                 pathName: "./src/Hello.qml",
@@ -243,7 +243,7 @@ module.exports.tsresourcefile = {
                 target: "mehr Quellen text"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -310,7 +310,7 @@ module.exports.tsresourcefile = {
                 target: "noch mehr Quellen text"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -388,7 +388,7 @@ module.exports.tsresourcefile = {
                 context: "Test2"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -465,7 +465,7 @@ module.exports.tsresourcefile = {
                 context: "Test2"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -498,6 +498,65 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
+        test.done();
+    },
+    testTSResourceFileRightContentsDupkeys: function(test) {
+        test.expect(2);
+
+        var tsrf = new TSResourceFile({
+            project: p,
+            locale: "de-DE"
+        });
+
+        test.ok(tsrf);
+        [
+            {
+                type: "string",
+                project: "inputcommon",
+                pathName: "./Test.qml",
+                targetLocale: "de-DE",
+                key: "duplicated keys",
+                sourceLocale: "en-US",
+                source: "source text",
+                target: "Quellen text"
+            },
+            {
+                type: "string",
+                project: "inputcommon",
+                pathName: "./Test.qml",
+                targetLocale: "de-DE",
+                key: "duplicated keys",
+                sourceLocale: "en-US",
+                source: "more source text",
+                target: "mehr Quellen text"
+            }
+        ].forEach(function(res) {
+            var resource = new SourceContextResourceString(res);
+            tsrf.addResource(resource);
+        });
+
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
+         '  <context>\n' +
+         '    <name>Test</name>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>source text</source>\n' +
+         '      <comment>duplicated keys</comment>\n' +
+         '      <translation>Quellen text</translation>\n' +
+         '    </message>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>more source text</source>\n' +
+         '      <comment>duplicated keys</comment>\n' +
+         '      <translation>mehr Quellen text</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
+        );
+
         test.done();
     },
 
@@ -709,7 +768,7 @@ module.exports.tsresourcefile = {
                 target: "noch mehr Quellentext"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -759,7 +818,7 @@ module.exports.tsresourcefile = {
                 target: "noch mehr Quellentext"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -812,7 +871,7 @@ module.exports.tsresourcefile = {
                 target: "noch mehr Quellentext"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
