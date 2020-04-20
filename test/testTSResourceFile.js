@@ -20,7 +20,7 @@
 if (!TSResourceFile) {
     var TSResourceFile = require("../TSResourceFile.js");
     var CustomProject = require("loctool/lib/CustomProject.js");
-    var ContextResourceString = require("loctool/lib/ContextResourceString.js");
+    var SourceContextResourceString = require("loctool/lib/SourceContextResourceString.js");
 }
 
 function diff(a, b) {
@@ -125,7 +125,7 @@ module.exports.tsresourcefile = {
                 target: "noch mehr Quellentext"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -141,7 +141,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        var resource = new ContextResourceString({
+        var resource = new SourceContextResourceString({
                 type: "string",
                 project: "inputcommon",
                 pathName: "./src/Hello.qml",
@@ -182,7 +182,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        var resource = new ContextResourceString({
+        var resource = new SourceContextResourceString({
                 type: "string",
                 project: "inputcommon",
                 pathName: "./src/Hello.qml",
@@ -243,7 +243,7 @@ module.exports.tsresourcefile = {
                 target: "mehr Quellen text"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -310,7 +310,7 @@ module.exports.tsresourcefile = {
                 target: "noch mehr Quellen text"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -388,7 +388,7 @@ module.exports.tsresourcefile = {
                 context: "Test2"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -465,7 +465,7 @@ module.exports.tsresourcefile = {
                 context: "Test2"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -531,7 +531,7 @@ module.exports.tsresourcefile = {
                 target: "mehr Quellen text"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -768,7 +768,7 @@ module.exports.tsresourcefile = {
                 target: "noch mehr Quellentext"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -818,7 +818,7 @@ module.exports.tsresourcefile = {
                 target: "noch mehr Quellentext"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
@@ -871,7 +871,7 @@ module.exports.tsresourcefile = {
                 target: "noch mehr Quellentext"
             }
         ].forEach(function(res) {
-            var resource = new ContextResourceString(res);
+            var resource = new SourceContextResourceString(res);
             tsrf.addResource(resource);
         });
 
