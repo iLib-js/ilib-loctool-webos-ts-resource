@@ -241,7 +241,7 @@ TSResourceFile.prototype.getContent = function() {
     var tsContents = {
         "version": "2.1",
         "language": this.locale.getSpec(),
-        "sourcelanguage": "en-US",
+        "sourcelanguage": "en-KR",
         "context": content["context"]
     }
 
