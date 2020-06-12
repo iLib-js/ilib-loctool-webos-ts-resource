@@ -158,7 +158,7 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getContent(),
          '<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
-         '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
          '    <name>Hello</name>\n' +
          '    <message>\n' +
@@ -198,7 +198,7 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getContent(),
          '<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
-         '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
          '    <name>Hello</name>\n' +
          '    <message>\n' +
@@ -250,7 +250,7 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getContent(),
          '<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
-         '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
@@ -317,7 +317,7 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getContent(),
          '<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
-         '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
@@ -395,7 +395,7 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getContent(),
          '<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
-         '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
@@ -472,7 +472,7 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getContent(),
          '<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
-         '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
@@ -538,7 +538,7 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getContent(),
          '<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
-         '<TS version="2.1" language="de-DE" sourcelanguage="en-US">\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
@@ -569,7 +569,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getContent(),'<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE" sourcelanguage="en-US"></TS>');
+        test.equal(tsrf.getContent(),'<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE" sourcelanguage="en-KR"></TS>');
         test.done();
     },
 
@@ -772,7 +772,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="ko-KR" sourcelanguage="en-US"></TS>';
+        var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="ko-KR" sourcelanguage="en-KR"></TS>';
         var actual = tsrf.getContent();
         
         test.equal(actual, expected);
@@ -823,7 +823,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the default locale spec in the first line
-        var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE-ASDF" sourcelanguage="en-US"></TS>';
+        var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE-ASDF" sourcelanguage="en-KR"></TS>';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
@@ -876,7 +876,7 @@ module.exports.tsresourcefile = {
         });
 
         // should use the default locale spec in the first line
-        var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE-ASDF" sourcelanguage="en-US"></TS>';
+        var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE-ASDF" sourcelanguage="en-KR"></TS>';
 
         var actual = tsrf.getContent();
         diff(actual, expected);
