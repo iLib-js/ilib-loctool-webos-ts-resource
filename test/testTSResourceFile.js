@@ -43,7 +43,7 @@ var p = new CustomProject({
     resourceDirs: {
         "ts": "."
         }
-    }, "./testfiles", {
+    }, ".", {
         locales:["en-GB"]
     });
 
@@ -582,7 +582,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_de.ts");
+        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de.ts");
         test.done();
     },
 
@@ -608,7 +608,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_de_AT.ts");
+        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de_AT.ts");
         test.done();
     },
 
@@ -621,7 +621,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_de.ts");
+        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de.ts");
         test.done();
     },
 
@@ -634,7 +634,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_de_AT_ASDF.ts");
+        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de_AT_ASDF.ts");
         test.done();
     },
 
@@ -647,7 +647,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_zh.ts");
+        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_zh.ts");
         test.done();
     },
 
@@ -673,7 +673,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_zh_Hant_HK.ts");
+        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_zh_Hant_HK.ts");
         test.done();
     },
 
@@ -686,7 +686,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_zh_Hans_SG.ts");
+        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_zh_Hans_SG.ts");
         test.done();
     },
 
@@ -699,7 +699,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_zh_Hant_TW.ts");
+        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_zh_Hant_TW.ts");
         test.done();
     },
 
@@ -712,7 +712,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_en.ts");
+        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_en.ts");
         test.done();
     },
 
@@ -725,7 +725,7 @@ module.exports.tsresourcefile = {
         });
 
         test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "locales/quicksettings_de_AT.ts");
+        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de_AT.ts");
         test.done();
     },
 
@@ -891,13 +891,13 @@ module.exports.tsresourcefile = {
                     "es-ES","et-EE","fa-IR","fa-AF","fr-FR","fr-CA", "zh-Hans-CN","zh-Hant-HK","zh-Hant-TW"];
 
         var expected = [
-            "locales/quicksettings_en.ts","locales/quicksettings_en_GB.ts",
-            "locales/quicksettings_en_AU.ts","locales/quicksettings_es_CO.ts",
-            "locales/quicksettings_es.ts","locales/quicksettings_et.ts",
-            "locales/quicksettings_fa.ts","locales/quicksettings_fa_AF.ts",
-            "locales/quicksettings_fr.ts","locales/quicksettings_fr_CA.ts",
-            "locales/quicksettings_zh.ts","locales/quicksettings_zh_Hant_HK.ts",
-            "locales/quicksettings_zh_Hant_TW.ts"
+            "testfiles/locales/quicksettings_en.ts","testfiles/locales/quicksettings_en_GB.ts",
+            "testfiles/locales/quicksettings_en_AU.ts","testfiles/locales/quicksettings_es_CO.ts",
+            "testfiles/locales/quicksettings_es.ts","testfiles/locales/quicksettings_et.ts",
+            "testfiles/locales/quicksettings_fa.ts","testfiles/locales/quicksettings_fa_AF.ts",
+            "testfiles/locales/quicksettings_fr.ts","testfiles/locales/quicksettings_fr_CA.ts",
+            "testfiles/locales/quicksettings_zh.ts","testfiles/locales/quicksettings_zh_Hant_HK.ts",
+            "testfiles/locales/quicksettings_zh_Hant_TW.ts"
         ];
         for (var i=0; i<locales.length;i++) {
             tsrf = new TSResourceFile({
