@@ -275,7 +275,7 @@ TSResourceFile.prototype.getResourceFilePath = function(locale) {
     }
     filename = projectId + "_" + filename;
 
-    dir = this.project.getResourceDirs("ts")[0] || ".";
+    dir = path.join(this.project.target, this.project.getResourceDirs("ts")[0] || ".");
     newPath = path.join(dir, filename);
 
     logger.trace("Getting resource file path for locale " + locale + ": " + newPath);
