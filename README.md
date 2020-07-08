@@ -5,6 +5,7 @@ allows it to read and localize ts resource files. This plugins is optimized for 
 ## Release Notes
 v1.2.1
 * Fix resource target path
+* Updated code to print log with log4js.
 
 v1.2.0
 * Changed default sourcelanguage to `en-KR`.

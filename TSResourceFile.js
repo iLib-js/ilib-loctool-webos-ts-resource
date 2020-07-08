@@ -24,6 +24,7 @@ var LocaleMatcher = require("ilib/lib/LocaleMatcher.js");
 var xml2json = require("xml2json");
 var PrettyData = require("pretty-data").pd;
 var log4js = require("log4js");
+log4js.configure(path.dirname(module.filename) + '/log4js.json');
 var logger = log4js.getLogger("loctool.plugin.TSResourceFile");
 
 /**
@@ -299,7 +300,7 @@ TSResourceFile.prototype.write = function() {
 
         var js = this.getContent();
         fs.writeFileSync(this.pathName, js, "utf8");
-        logger.debug("Wrote string translations to file " + this.pathName);
+        logger.info("Wrote string translations to file " + this.pathName);
     } else {
         logger.debug("File " + this.pathName + " is not dirty. Skipping.");
     }

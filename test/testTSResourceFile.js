@@ -39,7 +39,7 @@ function diff(a, b) {
 var p = new CustomProject({
     id: "inputcommon",
     projectType: "webos-qml",
-    sourceLocale: "en-US",
+    sourceLocale: "en-KR",
     resourceDirs: {
         "ts": "."
         }
@@ -50,7 +50,7 @@ var p = new CustomProject({
 var p2 = new CustomProject({
     id: "quicksettings",
     projectType: "webos-qml",
-    sourceLocale: "en-US",
+    sourceLocale: "en-KR",
     resourceDirs: {
         "ts": "locales"
         }
@@ -742,17 +742,19 @@ module.exports.tsresourcefile = {
         [
             {
                 type: "string",
-                project: "webOSQML",
+                project: "quicksettings",
                 targetLocale: "ko-KR",
                 key: "source text",
+                pathName: "./Test.qml",
                 sourceLocale: "en-US",
                 source: "source text",
                 target: "Quellentext"
             },
             {
                 type: "string",
-                project: "webOSQML",
+                project: "quicksettings",
                 targetLocale: "ko-KR",
+                pathName: "./Test.qml",
                 key: "more source text",
                 sourceLocale: "en-US",
                 source: "more source text",
@@ -760,8 +762,9 @@ module.exports.tsresourcefile = {
             },
             {
                 type: "string",
-                project: "webOSQML",
+                project: "quicksettings",
                 targetLocale: "ko-KR",
+                pathName: "./Test.qml",
                 key: "yet more source text",
                 sourceLocale: "en-US",
                 source: "yet more source text",
@@ -772,13 +775,32 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="ko-KR" sourcelanguage="en-KR"></TS>';
-        var actual = tsrf.getContent();
-        
-        test.equal(actual, expected);
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="ko-KR" sourcelanguage="en-KR">\n' +
+         '  <context>\n' +
+         '    <name>Test</name>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>more source text</source>\n' +
+         '      <translation>mehr Quellentext</translation>\n' +
+         '    </message>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>source text</source>\n' +
+         '      <translation>Quellentext</translation>\n' +
+         '    </message>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>yet more source text</source>\n' +
+         '      <translation>noch mehr Quellentext</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
+        );
         test.done();
     },
-
     testTSResourceFileGetContentDefaultLocaleWithFlavor: function(test) {
         test.expect(2);
 
@@ -792,28 +814,31 @@ module.exports.tsresourcefile = {
         [
             {
                 type: "string",
-                project: "webOSQML",
+                project: "quicksettings",
                 targetLocale: "de-DE-ASDF",
+                pathName: "./Test2.qml",
                 key: "source text",
-                sourceLocale: "en-US",
+                sourceLocale: "en-KR",
                 source: "source text",
                 target: "Quellentext"
             },
             {
                 type: "string",
-                project: "webOSQML",
+                project: "quicksettings",
                 targetLocale: "de-DE-ASDF",
+                pathName: "./Test2.qml",
                 key: "more source text",
-                sourceLocale: "en-US",
+                sourceLocale: "en-KR",
                 source: "more source text",
                 target: "mehr Quellentext"
             },
             {
                 type: "string",
-                project: "webOSQML",
+                project: "quicksettings",
                 targetLocale: "de-DE-ASDF",
+                pathName: "./Test2.qml",
                 key: "yet more source text",
-                sourceLocale: "en-US",
+                sourceLocale: "en-KR",
                 source: "yet more source text",
                 target: "noch mehr Quellentext"
             }
@@ -822,68 +847,34 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        // should use the default locale spec in the first line
-        var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE-ASDF" sourcelanguage="en-KR"></TS>';
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="de-DE-ASDF" sourcelanguage="en-KR">\n' +
+         '  <context>\n' +
+         '    <name>Test2</name>\n' +
+         '    <message>\n' +
+         '      <location filename="Test2.qml"></location>\n' +
+         '      <source>more source text</source>\n' +
+         '      <translation>mehr Quellentext</translation>\n' +
+         '    </message>\n' +
+         '    <message>\n' +
+         '      <location filename="Test2.qml"></location>\n' +
+         '      <source>source text</source>\n' +
+         '      <translation>Quellentext</translation>\n' +
+         '    </message>\n' +
+         '    <message>\n' +
+         '      <location filename="Test2.qml"></location>\n' +
+         '      <source>yet more source text</source>\n' +
+         '      <translation>noch mehr Quellentext</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
+        );
 
-        var actual = tsrf.getContent();
-        diff(actual, expected);
-
-        test.equal(actual, expected);
         test.done();
     },
 
-    testTSResourceFileGetContentNonDefaultLocaleWithFlavor: function(test) {
-        test.expect(2);
-
-        var tsrf = new TSResourceFile({
-            project: p2,
-            locale: "de-DE-ASDF"
-        });
-
-        test.ok(tsrf);
-
-        [
-            {
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "de-DE-ASDF",
-                key: "source text",
-                sourceLocale: "en-US",
-                source: "source text",
-                target: "Quellentext"
-            },
-            {
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "de-DE-ASDF",
-                key: "more source text",
-                sourceLocale: "en-US",
-                source: "more source text",
-                target: "mehr Quellentext"
-            },
-            {
-                type: "string",
-                project: "webOSQML",
-                targetLocale: "de-DE-ASDF",
-                key: "yet more source text",
-                sourceLocale: "en-US",
-                source: "yet more source text",
-                target: "noch mehr Quellentext"
-            }
-        ].forEach(function(res) {
-            var resource = new SourceContextResourceString(res);
-            tsrf.addResource(resource);
-        });
-
-        // should use the default locale spec in the first line
-        var expected = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE-ASDF" sourcelanguage="en-KR"></TS>';
-
-        var actual = tsrf.getContent();
-        diff(actual, expected);
-
-        test.equal(actual, expected);
-        test.done();
-    },
     teasTSResourceFileGetResourceFilePaths: function(test) {
         test.expect(13);
         var tsrf;
