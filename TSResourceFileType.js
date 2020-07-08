@@ -17,11 +17,11 @@
  * limitations under the License.
  */
 
-var fs = require("fs");
 var path = require("path");
 var log4js = require("log4js");
 var TSResourceFile = require("./TSResourceFile.js");
 var logger = log4js.getLogger("loctool.plugin.TSResourceFileType");
+log4js.configure(path.dirname(module.filename) + '/log4js.json');
 
 /**
  * @class Manage a collection of ts resource files.
