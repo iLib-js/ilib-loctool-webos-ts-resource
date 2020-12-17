@@ -500,6 +500,127 @@ module.exports.tsresourcefile = {
         );
         test.done();
     },
+    testTSResourceFileRightContentsSourceTargetSame: function(test) {
+        test.expect(2);
+
+        var tsrf = new TSResourceFile({
+            project: p,
+            locale: "de-DE"
+        });
+
+        test.ok(tsrf);
+        [
+            {
+                type: "string",
+                project: "inputcommon",
+                pathName: "./Test.qml",
+                targetLocale: "de-DE",
+                key: "source text key",
+                sourceLocale: "en-US",
+                source: "source text",
+                target: "source text"
+            }
+        ].forEach(function(res) {
+            var resource = new SourceContextResourceString(res);
+            tsrf.addResource(resource);
+        });
+
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
+         '  <context>\n' +
+         '    <name>Test</name>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>source text</source>\n' +
+         '      <comment>source text key</comment>\n' +
+         '      <translation>source text</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
+        );
+
+        test.done()
+    },
+    testTSResourceFileRightContentsKeyTargetSame: function(test) {
+        test.expect(2);
+
+        var tsrf = new TSResourceFile({
+            project: p,
+            locale: "de-DE"
+        });
+
+        test.ok(tsrf);
+        [
+            {
+                type: "string",
+                project: "inputcommon",
+                pathName: "./Test.qml",
+                targetLocale: "de-DE",
+                key: "more source text",
+                sourceLocale: "en-US",
+                source: "source text one",
+                target: "more source text"
+            }
+        ].forEach(function(res) {
+            var resource = new SourceContextResourceString(res);
+            tsrf.addResource(resource);
+        });
+
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
+         '  <context>\n' +
+         '    <name>Test</name>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.qml"></location>\n' +
+         '      <source>source text one</source>\n' +
+         '      <comment>more source text</comment>\n' +
+         '      <translation>more source text</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
+        );
+
+        test.done()
+    },
+    testTSResourceFileRightContentsSpirceKeyTargetSame: function(test) {
+        test.expect(2);
+
+        var tsrf = new TSResourceFile({
+            project: p,
+            locale: "de-DE"
+        });
+
+        test.ok(tsrf);
+        [
+            {
+                type: "string",
+                project: "inputcommon",
+                pathName: "./Test.qml",
+                targetLocale: "de-DE",
+                key: "source text",
+                sourceLocale: "en-US",
+                source: "source text",
+                target: "source text"
+            }
+        ].forEach(function(res) {
+            var resource = new SourceContextResourceString(res);
+            tsrf.addResource(resource);
+        });
+
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
+         '  <context></context>\n' +
+         '</TS>'
+        );
+
+        test.done()
+    },
     testTSResourceFileRightContentsDupkeys: function(test) {
         test.expect(2);
 
