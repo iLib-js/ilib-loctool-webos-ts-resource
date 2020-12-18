@@ -586,7 +586,7 @@ module.exports.tsresourcefile = {
 
         test.done()
     },
-    testTSResourceFileRightContentsSpirceKeyTargetSame: function(test) {
+    testTSResourceFileRightContentsSourceKeyTargetSame: function(test) {
         test.expect(2);
 
         var tsrf = new TSResourceFile({
