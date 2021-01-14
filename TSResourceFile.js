@@ -173,58 +173,52 @@ TSResourceFile.prototype.getContent = function() {
             }
 
             if (resource.getSource() && resource.getTarget()) {
-                if (clean(resource.getSource()) !== clean(resource.getTarget()) ||
-                    clean(resource.getKey()) !== clean(resource.getTarget()) ) {
-                    logger.trace("writing translation for " + resource.getKey() + " as " + resource.getTarget());
+                logger.trace("writing translation for " + resource.getKey() + " as " + resource.getTarget());
 
-                    filename = this.getFileName(resource.getPath());
+                filename = this.getFileName(resource.getPath());
 
-                    var messageObj = {
-                        "location" : {
-                            "filename": filename,
-                        },
-                        "source": {
-                            "$t": resource.getSource()
-                        }
-                    };
-
-                    if (resource.getSource() !== resource.getKey()) {
-                        messageObj["comment"] = {
-                            "$t": resource.getKey()
-                        }
+                var messageObj = {
+                    "location" : {
+                        "filename": filename,
+                    },
+                    "source": {
+                        "$t": resource.getSource()
                     }
-                    messageObj["translation"] = {
-                        "$t": resource.getTarget()
+                };
+
+                if (resource.getKey() && resource.getSource() !== resource.getKey()) {
+                    messageObj["comment"] = {
+                        "$t": resource.getKey()
                     }
+                }
+                messageObj["translation"] = {
+                    "$t": resource.getTarget()
+                }
 
-                    if (typeof (resource.getComment()) !== "undefined") {
-                        messageObj["extracomment"] = {
-                            "$t": resource.getComment()
-                        }
+                if (typeof (resource.getComment()) !== "undefined") {
+                    messageObj["extracomment"] = {
+                        "$t": resource.getComment()
                     }
+                }
 
-                    if (fileList.indexOf(filename) !== -1) {
-                        for (var i=0; i< content["context"].length; i++) {
-                            if (content["context"][i]["name"]["$t"] === filename.replace(".qml", "")) {
-                                content["context"][i]["message"].push(messageObj);
-                                break;
-                            }
+                if (fileList.indexOf(filename) !== -1) {
+                    for (var i=0; i< content["context"].length; i++) {
+                        if (content["context"][i]["name"]["$t"] === filename.replace(".qml", "")) {
+                            content["context"][i]["message"].push(messageObj);
+                            break;
                         }
-
-                    } else {
-                        fileList.push(filename);
-                        var contextObj = {
-                            "name" :{
-                                "$t": filename.replace(".qml", "")
-                            },
-                            "message": []
-                        }
-                        contextObj["message"].push(messageObj);
-                        contextList.push(contextObj);
-                        content["context"] = contextList;
                     }
                 } else {
-                    logger.trace("skipping translation with no change");
+                    fileList.push(filename);
+                    var contextObj = {
+                        "name" :{
+                            "$t": filename.replace(".qml", "")
+                        },
+                        "message": []
+                    }
+                    contextObj["message"].push(messageObj);
+                    contextList.push(contextObj);
+                    content["context"] = contextList;
                 }
             } else {
                 logger.warn("String resource " + resource.getKey() + " has no source text. Skipping...");
