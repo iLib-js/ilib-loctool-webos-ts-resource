@@ -81,17 +81,18 @@ TSResourceFileType.prototype.name = function() {
  * @return {TSResourceFile} a resource file instance for the
  * given path
  */
-TSResourceFileType.prototype.newFile = function(pathName) {
+TSResourceFileType.prototype.newFile = function(pathName, options) {
     var file = new TSResourceFile({
         project: this.project,
         pathName: pathName,
+        locale: (options && options.locale) || this.project.sourceLocale,
         type: this,
         API: this.API
     });
 
-    var locale = file.getLocale() || this.project.sourceLocale;
-
+    var locale = file.getLocale();
     this.resourceFiles[locale] = file;
+
     return file;
 };
 
