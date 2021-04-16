@@ -85,14 +85,14 @@ TSResourceFileType.prototype.newFile = function(pathName, options) {
     var file = new TSResourceFile({
         project: this.project,
         pathName: pathName,
-        locale: options.locale || this.project.sourceLocale,
+        locale: (options && options.locale) || this.project.sourceLocale,
         type: this,
         API: this.API
     });
 
     var locale = file.getLocale();
-
     this.resourceFiles[locale] = file;
+
     return file;
 };
 
