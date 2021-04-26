@@ -5,6 +5,7 @@ allows it to read and localize ts resource files. This plugins is optimized for 
 ## Release Notes
 v1.2.5
 * Fixed `newFile()` to get locale parameter for convert feature
+* Updated dependent module version to have the latest one. (loctool: 2.12.0)
 
 v1.2.4
 * Updated dependent module version to have the latest one. (loctool: 2.10.3)
