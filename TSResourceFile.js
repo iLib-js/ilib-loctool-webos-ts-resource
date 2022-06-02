@@ -1,7 +1,7 @@
 /*
  * TSResourceFile.js - represents an ts style resource file
  *
- * Copyright (c) 2020-2021, JEDLSoft
+ * Copyright (c) 2020-2022, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,6 @@ var Locale = require("ilib/lib/Locale.js");
 var LocaleMatcher = require("ilib/lib/LocaleMatcher.js");
 var xml2json = require("xml2json");
 var PrettyData = require("pretty-data").pd;
-var log4js = require("log4js");
-log4js.configure(path.dirname(module.filename) + '/log4js.json');
-var logger = log4js.getLogger("loctool.plugin.TSResourceFile");
 
 /**
  * @class Represents an ts resource file.
@@ -40,15 +37,15 @@ var logger = log4js.getLogger("loctool.plugin.TSResourceFile");
  * @param {Object} props properties that control the construction of this file.
  */
 var TSResourceFile = function(props) {
-    var lanDefaultLocale, propsLocale;
+    var lanDefaultLocale;
 
     this.project = props.project;
     this.locale = new Locale(props.locale);
     this.API = props.project.getAPI();
-
+    this.logger = this.API.getLogger("loctool.plugin.webOSTSResourceFile");
     this.minimalLocale = new LocaleMatcher({locale: props.locale}).getLikelyLocaleMinimal().getSpec();
-    langDefaultLocale = new LocaleMatcher({locale: this.locale.language}).getLikelyLocaleMinimal().getSpec();
-    this.baseLocale = langDefaultLocale === this.minimalLocale;
+    lanDefaultLocale = new LocaleMatcher({locale: this.locale.language}).getLikelyLocaleMinimal().getSpec();
+    this.baseLocale = lanDefaultLocale === this.minimalLocale;
 
     this.set = this.API.newTranslationSet(this.project && this.project.sourceLocale || "en-US");
 };
@@ -109,20 +106,20 @@ TSResourceFile.prototype.getFileName = function(pathName) {
  * @param {Resource} res a resource to add to this file
  */
 TSResourceFile.prototype.addResource = function(res) {
-    logger.trace("TSResourceFile.addResource: " + JSON.stringify(res) + " to " + this.project.getProjectId() + ", " + this.locale + ", " + JSON.stringify(this.context));
+    this.logger.trace("TSResourceFile.addResource: " + JSON.stringify(res) + " to " + this.project.getProjectId() + ", " + this.locale + ", " + JSON.stringify(this.context));
     var resLocale = res.getTargetLocale() || res.getSourceLocale();
     if (res && res.getProject() === this.project.getProjectId() && resLocale === this.locale.getSpec()) {
-        logger.trace("correct project, context, and locale. Adding.");
+        this.logger.trace("correct project, context, and locale. Adding.");
         this.set.add(res);
     } else {
         if (res) {
             if (res.getProject() !== this.project.getProjectId()) {
-                logger.warn("Attempt to add a resource to a resource file with the incorrect project.");
+                this.logger.warn("Attempt to add a resource to a resource file with the incorrect project.");
             } else {
-                logger.warn("Attempt to add a resource to a resource file with the incorrect locale. " + resLocale + " vs. " + this.locale.getSpec());
+                this.logger.warn("Attempt to add a resource to a resource file with the incorrect locale. " + resLocale + " vs. " + this.locale.getSpec());
             }
         } else {
-            logger.warn("Attempt to add an undefined resource to a resource file.");
+            this.logger.warn("Attempt to add an undefined resource to a resource file.");
         }
     }
 };
@@ -154,7 +151,7 @@ function clean(str) {
  */
 TSResourceFile.prototype.getContent = function() {
     var content = {}, json = {};
-    var fileList = [], messageList = [], contextList = [];
+    var fileList = [], contextList = [];
 
     if (this.set.isDirty()) {
         var resources = this.set.getAll();
@@ -173,7 +170,7 @@ TSResourceFile.prototype.getContent = function() {
             }
 
             if (resource.getSource() && resource.getTarget()) {
-                logger.trace("writing translation for " + resource.getKey() + " as " + resource.getTarget());
+                this.logger.trace("writing translation for " + resource.getKey() + " as " + resource.getTarget());
 
                 filename = this.getFileName(resource.getPath());
 
@@ -221,7 +218,7 @@ TSResourceFile.prototype.getContent = function() {
                     content["context"] = contextList;
                 }
             } else {
-                logger.warn("String resource " + resource.getKey() + " has no source text. Skipping...");
+                this.logger.warn("String resource " + resource.getKey() + " has no source text. Skipping...");
             }
         }
     }
@@ -273,7 +270,7 @@ TSResourceFile.prototype.getResourceFilePath = function(locale) {
     dir = path.join(this.project.target, this.project.getResourceDirs("ts")[0] || ".");
     newPath = path.join(dir, filename);
 
-    logger.trace("Getting resource file path for locale " + locale + ": " + newPath);
+    this.logger.trace("Getting resource file path for locale " + locale + ": " + newPath);
     return newPath;
 };
 
@@ -281,7 +278,7 @@ TSResourceFile.prototype.getResourceFilePath = function(locale) {
  * Write the resource file out to disk again.
  */
 TSResourceFile.prototype.write = function() {
-    logger.trace("writing resource file. [" + this.project.getProjectId() + "," + this.locale + "]");
+    this.logger.trace("writing resource file. [" + this.project.getProjectId() + "," + this.locale + "]");
     if (this.set.isDirty()) {
         this.defaultSpec = this.locale.getSpec();
 
@@ -294,9 +291,9 @@ TSResourceFile.prototype.write = function() {
 
         var js = this.getContent();
         fs.writeFileSync(this.pathName, js, "utf8");
-        logger.info("Wrote string translations to file " + this.pathName);
+        this.logger.info("Wrote string translations to file " + this.pathName);
     } else {
-        logger.debug("File " + this.pathName + " is not dirty. Skipping.");
+        this.logger.debug("File " + this.pathName + " is not dirty. Skipping.");
     }
 };
 
