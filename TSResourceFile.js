@@ -20,9 +20,9 @@
 var fs = require("fs");
 var path = require("path");
 var Locale = require("ilib/lib/Locale.js");
-var LocaleMatcher = require("ilib/lib/LocaleMatcher.js");
 var xml2json = require("xml2json");
 var PrettyData = require("pretty-data").pd;
+var Utils = require("loctool/lib/utils.js");
 
 /**
  * @class Represents an ts resource file.
@@ -37,16 +37,14 @@ var PrettyData = require("pretty-data").pd;
  * @param {Object} props properties that control the construction of this file.
  */
 var TSResourceFile = function(props) {
-    var lanDefaultLocale;
-
     this.project = props.project;
     this.locale = new Locale(props.locale);
     this.API = props.project.getAPI();
     this.logger = this.API.getLogger("loctool.plugin.webOSTSResourceFile");
-    this.minimalLocale = new LocaleMatcher({locale: props.locale}).getLikelyLocaleMinimal().getSpec();
-    lanDefaultLocale = new LocaleMatcher({locale: this.locale.language}).getLikelyLocaleMinimal().getSpec();
-    this.baseLocale = lanDefaultLocale === this.minimalLocale;
-
+    if (this.project.localeMap){
+        Utils.setBaseLocale(props.project.localeMap);
+    }
+    this.baseLocale = Utils.isBaseLocale(this.locale.getSpec());
     this.set = this.API.newTranslationSet(this.project && this.project.sourceLocale || "en-US");
 };
 
