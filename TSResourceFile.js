@@ -41,7 +41,7 @@ var TSResourceFile = function(props) {
     this.locale = new Locale(props.locale);
     this.API = props.project.getAPI();
     this.logger = this.API.getLogger("loctool.plugin.webOSTSResourceFile");
-    if (this.project.localeMap){
+    if (Object.keys(this.project.localeMap).length > 0){
         Utils.setBaseLocale(props.project.localeMap);
     }
     this.baseLocale = Utils.isBaseLocale(this.locale.getSpec());
