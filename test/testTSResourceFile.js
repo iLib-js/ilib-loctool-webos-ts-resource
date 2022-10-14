@@ -1,7 +1,7 @@
 /*
  * testTSResourceFile.js - test the ts file handler object.
  *
- * Copyright (c) 2020-2021, JEDLSoft
+ * Copyright (c) 2020-2022, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,6 +59,21 @@ var p2 = new CustomProject({
     identify: true
 });
 
+var p3 = new CustomProject({
+    id: "quicksettings",
+    projectType: "webos-qml",
+    sourceLocale: "en-KR",
+    resourceDirs: {
+        "ts": "locales"
+        }
+    }, "./testfiles", {
+    locales:["es-CO", "es-ES", "fr-CA","fr-FR"],
+    localeMap: {
+        "es-CO":"es",
+        "fr-CA":"fr"
+    }
+});
+
 module.exports.tsresourcefile = {
     testTSResourceFileConstructor: function(test) {
         test.expect(1);
@@ -91,7 +106,6 @@ module.exports.tsresourcefile = {
 
         test.ok(tsrf);
         test.ok(!tsrf.isDirty());
-
 
         [
             {
@@ -1156,6 +1170,26 @@ module.exports.tsresourcefile = {
         for (var i=0; i<locales.length;i++) {
             tsrf = new TSResourceFile({
                 project: p2,
+                locale: locales[i]
+            });
+            test.equal(tsrf.getResourceFilePath(), expected[i]);
+        }
+        test.done();
+    },
+    teasTSResourceFileGetResourceFilePathsCustom: function(test) {
+        test.expect(4);
+        var tsrf;
+        var locales = ["es-CO", "es-ES", "fr-CA","fr-FR"];
+
+        var expected = [
+            "testfiles/locales/quicksettings_es.ts",
+            "testfiles/locales/quicksettings_es_ES.ts",
+            "testfiles/locales/quicksettings_fr.ts",
+            "testfiles/locales/quicksettings_fr_FR.ts"
+        ];
+        for (var i=0; i<locales.length;i++) {
+            tsrf = new TSResourceFile({
+                project: p3,
                 locale: locales[i]
             });
             test.equal(tsrf.getResourceFilePath(), expected[i]);
