@@ -4,6 +4,7 @@ allows it to read and localize ts resource files. This plugins is optimized for 
 
 ## Release Notes
 v1.3.0
+* Updated dependencies. (loctool: 2.18.0)
 * Added ability to override language default locale.
 
 v1.2.10
