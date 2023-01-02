@@ -1,7 +1,7 @@
 /*
  * testTSResourceFile.js - test the ts file handler object.
  *
- * Copyright (c) 2020-2022, JEDLSoft
+ * Copyright (c) 2020-2023, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -176,7 +176,7 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Hello</name>\n' +
          '    <message>\n' +
-         '      <location filename="Hello.qml"></location>\n' +
+         '      <location filename="Hello.qml"/>\n' +
          '      <source>source text</source>\n' +
          '      <translation>Quellentext</translation>\n' +
          '      <extracomment>i18n comments</extracomment>\n' +
@@ -216,7 +216,7 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Hello</name>\n' +
          '    <message>\n' +
-         '      <location filename="Hello.qml"></location>\n' +
+         '      <location filename="Hello.qml"/>\n' +
          '      <source>source text</source>\n' +
          '      <translation>Quellentext</translation>\n' +
          '    </message>\n' +
@@ -268,12 +268,12 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>more source text</source>\n' +
          '      <translation>mehr Quellen text</translation>\n' +
          '    </message>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>source text</source>\n' +
          '      <translation>Quellen text</translation>\n' +
          '    </message>\n' +
@@ -335,12 +335,12 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>more source text</source>\n' +
          '      <translation>mehr Quellen text</translation>\n' +
          '    </message>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>source text</source>\n' +
          '      <translation>Quellen text</translation>\n' +
          '    </message>\n' +
@@ -348,7 +348,7 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Translation</name>\n' +
          '    <message>\n' +
-         '      <location filename="Translation.qml"></location>\n' +
+         '      <location filename="Translation.qml"/>\n' +
          '      <source>yet more source text</source>\n' +
          '      <translation>noch mehr Quellen text</translation>\n' +
          '    </message>\n' +
@@ -413,12 +413,12 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>more source text</source>\n' +
          '      <translation>mehr Quellen text</translation>\n' +
          '    </message>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>source text</source>\n' +
          '      <translation>Quellen text</translation>\n' +
          '    </message>\n' +
@@ -426,7 +426,7 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test2</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test2.qml"></location>\n' +
+         '      <location filename="Test2.qml"/>\n' +
          '      <source>source text</source>\n' +
          '      <translation>Quellen text</translation>\n' +
          '    </message>\n' +
@@ -490,24 +490,24 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>more source text</source>\n' +
          '      <translation>mehr Quellen text</translation>\n' +
          '    </message>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>source text</source>\n' +
-         '      <comment>source text key1</comment>\n' +
          '      <translation>Quellen text</translation>\n' +
+         '      <comment>source text key1</comment>\n' +
          '    </message>\n' +
          '  </context>\n' +
          '  <context>\n' +
          '    <name>Test2</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test2.qml"></location>\n' +
+         '      <location filename="Test2.qml"/>\n' +
          '      <source>source text</source>\n' +
-         '      <comment>source text key3</comment>\n' +
          '      <translation>Quellen text</translation>\n' +
+         '      <comment>source text key3</comment>\n' +
          '    </message>\n' +
          '  </context>\n' +
          '</TS>'
@@ -546,10 +546,10 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>source text</source>\n' +
-         '      <comment>source text key</comment>\n' +
          '      <translation>source text</translation>\n' +
+         '      <comment>source text key</comment>\n' +
          '    </message>\n' +
          '  </context>\n' +
          '</TS>'
@@ -598,13 +598,13 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>source text</source>\n' +
-         '      <comment>source text key</comment>\n' +
          '      <translation>source text</translation>\n' +
+         '      <comment>source text key</comment>\n' +
          '    </message>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>source text </source>\n' +
          '      <translation>source text </translation>\n' +
          '    </message>\n' +
@@ -646,10 +646,10 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>source text one</source>\n' +
-         '      <comment>more source text</comment>\n' +
          '      <translation>more source text</translation>\n' +
+         '      <comment>more source text</comment>\n' +
          '    </message>\n' +
          '  </context>\n' +
          '</TS>'
@@ -689,7 +689,7 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>source text</source>\n' +
          '      <translation>source text</translation>\n' +
          '    </message>\n' +
@@ -753,12 +753,12 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>more source text</source>\n' +
          '      <translation>more source text</translation>\n' +
          '    </message>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>source text</source>\n' +
          '      <translation>source text</translation>\n' +
          '    </message>\n' +
@@ -766,10 +766,10 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test2</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test2.qml"></location>\n' +
+         '      <location filename="Test2.qml"/>\n' +
          '      <source>source text2</source>\n' +
-         '      <comment>more source text</comment>\n' +
          '      <translation>source text2</translation>\n' +
+         '      <comment>more source text</comment>\n' +
          '    </message>\n' +
          '  </context>\n' +
          '</TS>'
@@ -819,16 +819,16 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>source text</source>\n' +
-         '      <comment>duplicated keys</comment>\n' +
          '      <translation>Quellen text</translation>\n' +
+         '      <comment>duplicated keys</comment>\n' +
          '    </message>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>more source text</source>\n' +
-         '      <comment>duplicated keys</comment>\n' +
          '      <translation>mehr Quellen text</translation>\n' +
+         '      <comment>duplicated keys</comment>\n' +
          '    </message>\n' +
          '  </context>\n' +
          '</TS>'
@@ -1059,17 +1059,17 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>more source text</source>\n' +
          '      <translation>mehr Quellentext</translation>\n' +
          '    </message>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>source text</source>\n' +
          '      <translation>Quellentext</translation>\n' +
          '    </message>\n' +
          '    <message>\n' +
-         '      <location filename="Test.qml"></location>\n' +
+         '      <location filename="Test.qml"/>\n' +
          '      <source>yet more source text</source>\n' +
          '      <translation>noch mehr Quellentext</translation>\n' +
          '    </message>\n' +
@@ -1131,17 +1131,17 @@ module.exports.tsresourcefile = {
          '  <context>\n' +
          '    <name>Test2</name>\n' +
          '    <message>\n' +
-         '      <location filename="Test2.qml"></location>\n' +
+         '      <location filename="Test2.qml"/>\n' +
          '      <source>more source text</source>\n' +
          '      <translation>mehr Quellentext</translation>\n' +
          '    </message>\n' +
          '    <message>\n' +
-         '      <location filename="Test2.qml"></location>\n' +
+         '      <location filename="Test2.qml"/>\n' +
          '      <source>source text</source>\n' +
          '      <translation>Quellentext</translation>\n' +
          '    </message>\n' +
          '    <message>\n' +
-         '      <location filename="Test2.qml"></location>\n' +
+         '      <location filename="Test2.qml"/>\n' +
          '      <source>yet more source text</source>\n' +
          '      <translation>noch mehr Quellentext</translation>\n' +
          '    </message>\n' +

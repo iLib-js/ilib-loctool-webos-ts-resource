@@ -1,7 +1,7 @@
 /*
  * TSResourceFile.js - represents an ts style resource file
  *
- * Copyright (c) 2020-2022, JEDLSoft
+ * Copyright (c) 2020-2023, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 var fs = require("fs");
 var path = require("path");
 var Locale = require("ilib/lib/Locale.js");
-var xml2json = require("xml2json");
+var xmljs = require("xml-js");
 var PrettyData = require("pretty-data").pd;
 var Utils = require("loctool/lib/utils.js");
 
@@ -161,7 +161,7 @@ TSResourceFile.prototype.getContent = function() {
 
         for (var j = 0; j < resources.length; j++) {
             var resource = resources[j];
-            var filename, fileContext;
+            var filename = this.getFileName(resource.getPath());
 
             if (content["context"] === undefined) {
                 content["context"] = {};
@@ -173,32 +173,37 @@ TSResourceFile.prototype.getContent = function() {
                 filename = this.getFileName(resource.getPath());
 
                 var messageObj = {
-                    "location" : {
-                        "filename": filename,
+                    "location": {
+                        "_attributes" :{
+                            "filename": filename
+                        }
                     },
                     "source": {
-                        "$t": resource.getSource()
-                    }
-                };
-
-                if (resource.getKey() && resource.getSource() !== resource.getKey()) {
-                    messageObj["comment"] = {
-                        "$t": resource.getKey()
+                        "_text": resource.getSource()
+                    },
+                    "translation":{
+                        "_text": resource.getSource()
                     }
                 }
-                messageObj["translation"] = {
-                    "$t": resource.getTarget()
+
+                if (resource.getKey() && resource.getSource() !== resource.getKey()) {
+                    messageObj.comment = {
+                        "_text": resource.getKey()
+                    }
+                }
+                messageObj.translation = {
+                    "_text": resource.getTarget()
                 }
 
                 if (typeof (resource.getComment()) !== "undefined") {
-                    messageObj["extracomment"] = {
-                        "$t": resource.getComment()
+                    messageObj.extracomment = {
+                        "_text": resource.getComment()
                     }
                 }
 
                 if (fileList.indexOf(filename) !== -1) {
                     for (var i=0; i< content["context"].length; i++) {
-                        if (content["context"][i]["name"]["$t"] === filename.replace(".qml", "")) {
+                        if (content["context"][i]["name"]["_text"] === filename.replace(".qml", "")) {
                             content["context"][i]["message"].push(messageObj);
                             break;
                         }
@@ -207,7 +212,7 @@ TSResourceFile.prototype.getContent = function() {
                     fileList.push(filename);
                     var contextObj = {
                         "name" :{
-                            "$t": filename.replace(".qml", "")
+                            "_text": filename.replace(".qml", "")
                         },
                         "message": []
                     }
@@ -227,20 +232,20 @@ TSResourceFile.prototype.getContent = function() {
     if (settings && settings.TSResourceFile && settings.TSResourceFile.prefix) {
         output = settings.TSResourceFile.prefix;
     }
-
-    var tsContents = {
-        "version": "2.1",
-        "language": this.locale.getSpec(),
-        "sourcelanguage": "en-KR",
-        "context": content["context"]
-    }
-
-    json["TS"] = tsContents;
+    
+    json["TS"] = {
+        "_attributes":{
+            "version": "2.1",
+            "language": this.locale.getSpec(),
+            "sourcelanguage": "en-KR"
+        },
+        "context": contextList
+    };
     
     // take care of double-escaped unicode chars
     //output = output.replace(/\\\\u/g, "\\u");
 
-    var xml = '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE TS>' + xml2json.toXml(json, {sanitize: true});
+    var xml = '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE TS>' + xmljs.js2xml(json, {compact: true, spaces: 2});
     return PrettyData.xml(xml);
 };
 
@@ -254,7 +259,7 @@ TSResourceFile.prototype.getContent = function() {
  */
 TSResourceFile.prototype.getResourceFilePath = function(locale) {
     locale = locale || this.locale;
-    var dir, newPath, localePath;
+    var dir, newPath;
     var projectId = this.project.options.id;
     var filename = projectId +"_en.ts";
 
