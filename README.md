@@ -80,7 +80,7 @@ v1.0.0
 
 ## License
 
-Copyright (c) 2020-2022, JEDLSoft
+Copyright (c) 2020-2023, JEDLSoft
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
