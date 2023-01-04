@@ -182,7 +182,7 @@ TSResourceFile.prototype.getContent = function() {
                         "_text": resource.getSource()
                     },
                     "translation":{
-                        "_text": resource.getSource()
+                        "_text": resource.getTarget()
                     }
                 }
 
@@ -190,9 +190,6 @@ TSResourceFile.prototype.getContent = function() {
                     messageObj.comment = {
                         "_text": resource.getKey()
                     }
-                }
-                messageObj.translation = {
-                    "_text": resource.getTarget()
                 }
 
                 if (typeof (resource.getComment()) !== "undefined") {
