@@ -200,7 +200,7 @@ TSResourceFile.prototype.getContent = function() {
 
                 if (fileList.indexOf(filename) !== -1) {
                     for (var i=0; i< content["context"].length; i++) {
-                        if (content["context"][i]["name"]["_text"] === filename.replace(".qml", "")) {
+                        if (content["context"][i]["name"]["_text"] === filename.replace(/\.qml|\.js/, "")) {
                             content["context"][i]["message"].push(messageObj);
                             break;
                         }
@@ -209,7 +209,7 @@ TSResourceFile.prototype.getContent = function() {
                     fileList.push(filename);
                     var contextObj = {
                         "name" :{
-                            "_text": filename.replace(".qml", "")
+                            "_text": filename.replace(/\.qml|\.js/, "")
                         },
                         "message": []
                     }
