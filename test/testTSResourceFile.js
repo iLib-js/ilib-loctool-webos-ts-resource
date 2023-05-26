@@ -84,7 +84,6 @@ module.exports.tsresourcefile = {
         test.ok(tsrf);
         test.done();
     },
-
     testTSResourceFileConstructorParams: function(test) {
         test.expect(1);
 
@@ -186,7 +185,6 @@ module.exports.tsresourcefile = {
         );
         test.done();
     },
-
     testTSResourceFileRightContents: function(test) {
         test.expect(2);
 
@@ -225,7 +223,6 @@ module.exports.tsresourcefile = {
         );
         test.done();
     },
-
     testTSResourceFileRightContents2: function(test) {
         test.expect(2);
 
@@ -512,6 +509,161 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
+        test.done();
+    },
+    testTSResourceJSFileRightContents: function(test) {
+        test.expect(2);
+
+        var tsrf = new TSResourceFile({
+            project: p,
+            locale: "de-DE"
+        });
+
+        test.ok(tsrf);
+        var resource = new SourceContextResourceString({
+                type: "string",
+                project: "inputcommon",
+                pathName: "./src/JString.js",
+                targetLocale: "de-DE",
+                key: "source text",
+                sourceLocale: "en-US",
+                source: "source text",
+                target: "Quellentext",
+                context: "Hello"
+
+            });
+        tsrf.addResource(resource);
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
+         '  <context>\n' +
+         '    <name>JString</name>\n' +
+         '    <message>\n' +
+         '      <location filename="JString.js"/>\n' +
+         '      <source>source text</source>\n' +
+         '      <translation>Quellentext</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
+        );
+        test.done();
+    },
+    testTSResourceJSFileRightContents2: function(test) {
+        test.expect(2);
+
+        var tsrf = new TSResourceFile({
+            project: p,
+            locale: "de-DE"
+        });
+
+        test.ok(tsrf);
+        [
+            {
+                type: "string",
+                project: "inputcommon",
+                pathName: "./Test.js",
+                targetLocale: "de-DE",
+                key: "source text",
+                sourceLocale: "en-US",
+                source: "source text",
+                target: "Quellen text"
+            },
+            {
+                type: "string",
+                project: "inputcommon",
+                pathName: "./Test.js",
+                targetLocale: "de-DE",
+                key: "more source text",
+                sourceLocale: "en-US",
+                source: "more source text",
+                target: "mehr Quellen text"
+            }
+        ].forEach(function(res) {
+            var resource = new SourceContextResourceString(res);
+            tsrf.addResource(resource);
+        });
+
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
+         '  <context>\n' +
+         '    <name>Test</name>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.js"/>\n' +
+         '      <source>more source text</source>\n' +
+         '      <translation>mehr Quellen text</translation>\n' +
+         '    </message>\n' +
+         '    <message>\n' +
+         '      <location filename="Test.js"/>\n' +
+         '      <source>source text</source>\n' +
+         '      <translation>Quellen text</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
+        );
+
+        test.done();
+    },
+    testTSResourceJSFileRightContents3: function(test) {
+        test.expect(2);
+
+        var tsrf = new TSResourceFile({
+            project: p,
+            locale: "de-DE"
+        });
+
+        test.ok(tsrf);
+        [
+            {
+                type: "string",
+                project: "inputcommon",
+                pathName: "./Test.js",
+                targetLocale: "de-DE",
+                key: "source text",
+                sourceLocale: "en-US",
+                source: "source text",
+                target: "Quellen text"
+            },
+            {
+                type: "string",
+                project: "inputcommon",
+                pathName: "./jsstring.js",
+                targetLocale: "de-DE",
+                key: "more source text",
+                sourceLocale: "en-US",
+                source: "more source text",
+                target: "mehr Quellen text"
+            }
+        ].forEach(function(res) {
+            var resource = new SourceContextResourceString(res);
+            tsrf.addResource(resource);
+        });
+
+        test.equal(tsrf.getContent(),
+        '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<!DOCTYPE TS>\n' +
+        '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
+        '  <context>\n' +
+        '    <name>jsstring</name>\n' +
+        '    <message>\n' +
+        '      <location filename="jsstring.js"/>\n' +
+        '      <source>more source text</source>\n' +
+        '      <translation>mehr Quellen text</translation>\n' +
+        '    </message>\n' +
+        '  </context>\n' +
+        '  <context>\n' +
+        '    <name>Test</name>\n' +
+        '    <message>\n' +
+        '      <location filename="Test.js"/>\n' +
+        '      <source>source text</source>\n' +
+        '      <translation>Quellen text</translation>\n' +
+        '    </message>\n' +
+        '  </context>\n' +
+        '</TS>'
+        );
+
         test.done();
     },
     testTSResourceFileRightContentsSourceTargetSame: function(test) {
@@ -836,7 +988,6 @@ module.exports.tsresourcefile = {
 
         test.done();
     },
-
     testTSResourceFileGetContentsNoContent: function(test) {
         test.expect(2);
 
@@ -849,7 +1000,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getContent(),'<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE" sourcelanguage="en-KR"></TS>');
         test.done();
     },
-
     testTSResourceFileGetResourceFilePathDefaultLocaleForLanguage: function(test) {
         test.expect(2);
 
@@ -862,7 +1012,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de.ts");
         test.done();
     },
-
     testTSResourceFileGetResourceFilePathDefaultLocaleForLanguageNoDefaultAvailable: function(test) {
         test.expect(2);
 
@@ -875,7 +1024,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getResourceFilePath(), "inputcommon_de.ts");
         test.done();
     },
-
     testTSResourceFileGetResourceFilePathNonDefaultLocaleForLanguage: function(test) {
         test.expect(2);
 
@@ -888,7 +1036,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de_AT.ts");
         test.done();
     },
-
     testTSResourceFileGetResourceFilePathDefaultLocaleForLanguageWithFlavor: function(test) {
         test.expect(2);
 
@@ -901,7 +1048,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de.ts");
         test.done();
     },
-
     testTSResourceFileGetResourceFilePathNonDefaultLocaleForLanguageWithFlavor: function(test) {
         test.expect(2);
 
@@ -914,7 +1060,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de_AT_ASDF.ts");
         test.done();
     },
-
     testTSResourceFileGetResourceFilePathDefaultLocaleForLanguageZH: function(test) {
         test.expect(2);
 
@@ -927,7 +1072,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_zh.ts");
         test.done();
     },
-
     testTSResourceFileGetResourceFilePathDefaultLocaleForLanguageZHNoDefaultsAvailable: function(test) {
         test.expect(2);
 
@@ -940,7 +1084,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getResourceFilePath(), "inputcommon_zh.ts");
         test.done();
     },
-
     testTSResourceFileGetResourceFilePathDefaultLocaleForLanguageZH: function(test) {
         test.expect(2);
 
@@ -953,7 +1096,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_zh_Hant_HK.ts");
         test.done();
     },
-
     testTSResourceFileGetResourceFilePathNonDefaultLocaleForLanguageZH2: function(test) {
         test.expect(2);
 
@@ -966,7 +1108,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_zh_Hans_SG.ts");
         test.done();
     },
-
     testTSResourceFileGetResourceFilePathNonDefaultLocaleForLanguageZH3: function(test) {
         test.expect(2);
 
@@ -979,7 +1120,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_zh_Hant_TW.ts");
         test.done();
     },
-
     testTSResourceFileGetResourceFilePathDefaultLocale: function(test) {
         test.expect(2);
 
@@ -992,7 +1132,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_en.ts");
         test.done();
     },
-
     testTSResourceFileGetResourceFilePathAlreadyHasPath: function(test) {
         test.expect(2);
 
@@ -1005,7 +1144,6 @@ module.exports.tsresourcefile = {
         test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de_AT.ts");
         test.done();
     },
-
     testTSResourceFileGetContentDefaultLocale: function(test) {
         test.expect(2);
 
@@ -1151,7 +1289,6 @@ module.exports.tsresourcefile = {
 
         test.done();
     },
-
     teasTSResourceFileGetResourceFilePaths: function(test) {
         test.expect(13);
         var tsrf;
