@@ -4,6 +4,7 @@ allows it to read and localize ts resource files. This plugins is optimized for 
 
 ## Release Notes
 v1.4.2
+* Updated dependencies. (loctool: 2.21.0)
 * Fixed not to have file extension in name element with js file.
 
 v1.4.1
