@@ -1291,6 +1291,61 @@ module.exports.tsresourcefile = {
 
         test.done();
     },
+    testTSResourceFileGetContentwithContext: function(test) {
+        test.expect(2);
+
+        var tsrf = new TSResourceFile({
+            project: p2,
+            locale: "ko-KR"
+        });
+
+        test.ok(tsrf);
+
+        [
+            {
+                type: "string",
+                project: "quicksettings",
+                targetLocale: "ko-KR",
+                pathName: "./System.js",
+                key: "This function is not supported.",
+                sourceLocale: "en-KR",
+                source: "This function is not supported.",
+                target: "이 기능은 지원하지 않습니다.",
+                context: "appLaunch"
+            },
+            {
+                type: "string",
+                project: "quicksettings",
+                targetLocale: "ko-KR",
+                pathName: "./appLaunch.js",
+                key: "This function is not supported.",
+                sourceLocale: "en-KR",
+                source: "This function is not supported.",
+                target: "이 기능은 지원하지 않습니다.",
+                context: "appLaunch"
+            },
+        ].forEach(function(res) {
+            var resource = new SourceContextResourceString(res);
+            tsrf.addResource(resource);
+        });
+
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="ko-KR" sourcelanguage="en-KR">\n' +
+         '  <context>\n' +
+         '    <name>appLaunch</name>\n' +
+         '    <message>\n' +
+         '      <location filename="System.js"/>\n' +
+         '      <source>This function is not supported.</source>\n' +
+         '      <translation>이 기능은 지원하지 않습니다.</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
+        );
+
+        test.done();
+    },
     teasTSResourceFileGetResourceFilePaths: function(test) {
         test.expect(13);
         var tsrf;
