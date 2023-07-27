@@ -149,7 +149,7 @@ function clean(str) {
  */
 TSResourceFile.prototype.getContent = function() {
     var content = {}, json = {};
-    var fileList = [], contextList = [];
+    var contextNameList = [], contextList = [];
 
     if (this.set.isDirty()) {
         var resources = this.set.getAll();
@@ -162,6 +162,7 @@ TSResourceFile.prototype.getContent = function() {
         for (var j = 0; j < resources.length; j++) {
             var resource = resources[j];
             var filename = this.getFileName(resource.getPath());
+            var resContext = resource.getContext() || filename.replace(/\.qml|\.js/, "");
 
             if (content["context"] === undefined) {
                 content["context"] = {};
@@ -169,8 +170,6 @@ TSResourceFile.prototype.getContent = function() {
 
             if (resource.getSource() && resource.getTarget()) {
                 this.logger.trace("writing translation for " + resource.getKey() + " as " + resource.getTarget());
-
-                filename = this.getFileName(resource.getPath());
 
                 var messageObj = {
                     "location": {
@@ -198,18 +197,18 @@ TSResourceFile.prototype.getContent = function() {
                     }
                 }
 
-                if (fileList.indexOf(filename) !== -1) {
+                if (contextNameList.indexOf(resContext) !== -1) {
                     for (var i=0; i< content["context"].length; i++) {
-                        if (content["context"][i]["name"]["_text"] === filename.replace(/\.qml|\.js/, "")) {
+                        if (content["context"][i]["name"]["_text"] === resContext) {
                             content["context"][i]["message"].push(messageObj);
                             break;
                         }
                     }
                 } else {
-                    fileList.push(filename);
+                    contextNameList.push(resContext);
                     var contextObj = {
                         "name" :{
-                            "_text": filename.replace(/\.qml|\.js/, "")
+                            "_text": resContext
                         },
                         "message": []
                     }
