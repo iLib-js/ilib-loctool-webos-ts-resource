@@ -1310,7 +1310,7 @@ module.exports.tsresourcefile = {
                 key: "This function is not supported.",
                 sourceLocale: "en-KR",
                 source: "This function is not supported.",
-                target: "이 기능은 지원하지 않습니다.",
+                target: "사용할 수 없는 기능입니다.",
                 context: "appLaunch"
             },
             {
@@ -1321,7 +1321,7 @@ module.exports.tsresourcefile = {
                 key: "This function is not supported.",
                 sourceLocale: "en-KR",
                 source: "This function is not supported.",
-                target: "이 기능은 지원하지 않습니다.",
+                target: "사용할 수 없는 기능입니다.",
                 context: "appLaunch"
             },
         ].forEach(function(res) {
@@ -1338,7 +1338,7 @@ module.exports.tsresourcefile = {
          '    <message>\n' +
          '      <location filename="System.js"/>\n' +
          '      <source>This function is not supported.</source>\n' +
-         '      <translation>이 기능은 지원하지 않습니다.</translation>\n' +
+         '      <translation>사용할 수 없는 기능입니다.</translation>\n' +
          '    </message>\n' +
          '  </context>\n' +
          '</TS>'
