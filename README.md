@@ -4,7 +4,7 @@ allows it to read and localize ts resource files. This plugins is optimized for 
 
 ## Release Notes
 v1.5.0
-* 
+* Update to set context name value propely which is not always a file name.
 
 v1.4.2
 * Updated dependencies. (loctool: 2.21.0)
