@@ -538,7 +538,7 @@ module.exports.tsresourcefile = {
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
-         '    <name>JString</name>\n' +
+         '    <name>Hello</name>\n' +
          '    <message>\n' +
          '      <location filename="JString.js"/>\n' +
          '      <source>source text</source>\n' +
@@ -868,8 +868,8 @@ module.exports.tsresourcefile = {
                 targetLocale: "de-DE",
                 key: "source text",
                 sourceLocale: "en-US",
-                source: "source text",
-                target: "source text"
+                source: "1.source text",
+                target: "1.source text"
             },
             {
                 type: "string",
@@ -878,20 +878,20 @@ module.exports.tsresourcefile = {
                 targetLocale: "de-DE",
                 key: "more source text",
                 sourceLocale: "en-US",
-                source: "more source text",
-                target: "more source text",
-                context: "Test"
+                source: "2.more source text",
+                target: "2.more source text",
+                context: "contextTest"
             },
             {
                 type: "string",
                 project: "inputcommon",
                 pathName: "./Test2.qml",
                 targetLocale: "de-DE",
-                key: "more source text",
+                key: "source text2",
                 sourceLocale: "en-US",
-                source: "source text2",
-                target: "source text2",
-                context: "Test"
+                source: "3.source text2",
+                target: "3.source text2",
+                context: "contextTest"
             },
         ].forEach(function(res) {
             var resource = new SourceContextResourceString(res);
@@ -899,32 +899,34 @@ module.exports.tsresourcefile = {
         });
 
         test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
-         '<!DOCTYPE TS>\n' +
-         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
-         '  <context>\n' +
-         '    <name>Test</name>\n' +
-         '    <message>\n' +
-         '      <location filename="Test.qml"/>\n' +
-         '      <source>more source text</source>\n' +
-         '      <translation>more source text</translation>\n' +
-         '    </message>\n' +
-         '    <message>\n' +
-         '      <location filename="Test.qml"/>\n' +
-         '      <source>source text</source>\n' +
-         '      <translation>source text</translation>\n' +
-         '    </message>\n' +
-         '  </context>\n' +
-         '  <context>\n' +
-         '    <name>Test2</name>\n' +
-         '    <message>\n' +
-         '      <location filename="Test2.qml"/>\n' +
-         '      <source>source text2</source>\n' +
-         '      <translation>source text2</translation>\n' +
-         '      <comment>more source text</comment>\n' +
-         '    </message>\n' +
-         '  </context>\n' +
-         '</TS>'
+        '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<!DOCTYPE TS>\n' +
+        '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
+        '  <context>\n' +
+        '    <name>contextTest</name>\n' +
+        '    <message>\n' +
+        '      <location filename="Test.qml"/>\n' +
+        '      <source>2.more source text</source>\n' +
+        '      <translation>2.more source text</translation>\n' +
+        '      <comment>more source text</comment>\n' +
+        '    </message>\n' +
+        '    <message>\n' +
+        '      <location filename="Test2.qml"/>\n' +
+        '      <source>3.source text2</source>\n' +
+        '      <translation>3.source text2</translation>\n' +
+        '      <comment>source text2</comment>\n' +
+        '    </message>\n' +
+        '  </context>\n' +
+        '  <context>\n' +
+        '    <name>Test</name>\n' +
+        '    <message>\n' +
+        '      <location filename="Test.qml"/>\n' +
+        '      <source>1.source text</source>\n' +
+        '      <translation>1.source text</translation>\n' +
+        '      <comment>source text</comment>\n' +
+        '    </message>\n' +
+        '  </context>\n' +
+        '</TS>'
         );
 
         test.done()
@@ -1282,6 +1284,61 @@ module.exports.tsresourcefile = {
          '      <location filename="Test2.qml"/>\n' +
          '      <source>yet more source text</source>\n' +
          '      <translation>noch mehr Quellentext</translation>\n' +
+         '    </message>\n' +
+         '  </context>\n' +
+         '</TS>'
+        );
+
+        test.done();
+    },
+    testTSResourceFileGetContentwithContext: function(test) {
+        test.expect(2);
+
+        var tsrf = new TSResourceFile({
+            project: p2,
+            locale: "ko-KR"
+        });
+
+        test.ok(tsrf);
+
+        [
+            {
+                type: "string",
+                project: "quicksettings",
+                targetLocale: "ko-KR",
+                pathName: "./System.js",
+                key: "This function is not supported.",
+                sourceLocale: "en-KR",
+                source: "This function is not supported.",
+                target: "사용할 수 없는 기능입니다.",
+                context: "appLaunch"
+            },
+            {
+                type: "string",
+                project: "quicksettings",
+                targetLocale: "ko-KR",
+                pathName: "./appLaunch.js",
+                key: "This function is not supported.",
+                sourceLocale: "en-KR",
+                source: "This function is not supported.",
+                target: "사용할 수 없는 기능입니다.",
+                context: "appLaunch"
+            },
+        ].forEach(function(res) {
+            var resource = new SourceContextResourceString(res);
+            tsrf.addResource(resource);
+        });
+
+        test.equal(tsrf.getContent(),
+         '<?xml version="1.0" encoding="utf-8"?>\n' +
+         '<!DOCTYPE TS>\n' +
+         '<TS version="2.1" language="ko-KR" sourcelanguage="en-KR">\n' +
+         '  <context>\n' +
+         '    <name>appLaunch</name>\n' +
+         '    <message>\n' +
+         '      <location filename="System.js"/>\n' +
+         '      <source>This function is not supported.</source>\n' +
+         '      <translation>사용할 수 없는 기능입니다.</translation>\n' +
          '    </message>\n' +
          '  </context>\n' +
          '</TS>'
