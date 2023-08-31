@@ -1,6 +1,6 @@
 {
     "name": "ilib-loctool-webos-ts-resource",
-    "version": "1.5.0",
+    "version": "1.5.1",
     "main": "./TSResourceFileType.js",
     "description": "A loctool plugin that knows how to process ts resource files",
     "license": "Apache-2.0",
@@ -32,7 +32,8 @@
         "README.md",
         "LICENSE",
         "TSResourceFileType.js",
-        "TSResourceFile.js"
+        "TSResourceFile.js",
+        "npm-shrinkwrap.json"
     ],
     "repository": {
         "type": "git",
@@ -54,7 +55,7 @@
     },
     "devDependencies": {
         "assertextras": "^1.1.0",
-        "loctool": "2.22.0",
+        "loctool": "2.23.1",
         "nodeunit": "^0.11.3"
     }
 }
