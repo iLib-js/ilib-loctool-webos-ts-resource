@@ -3,6 +3,9 @@ ilib-loctool-webos-ts-resource is a plugin for the loctool that
 allows it to read and localize ts resource files. This plugins is optimized for webOS platform.
 
 ## Release Notes
+v1.5.2
+* Added `loctool` package to `peerDependencies` in `package.json`.
+
 v1.5.1
 * Updated dependencies. (loctool: 2.23.1)
 * Update to be included `npm-shrinkwrap.json` in the published files.
