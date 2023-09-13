@@ -3,8 +3,8 @@ ilib-loctool-webos-ts-resource is a plugin for the loctool that
 allows it to read and localize ts resource files. This plugins is optimized for webOS platform.
 
 ### TSResource FileType
-This plugins is for generate [TS](https://doc.qt.io/qt-6/linguist-ts-file-format.html) type of resource file from QML application.   
-The TS file format used by Qt Linguist. The TS file is a intermediate output for QML localization. *.qm fils are required for the application. Converting ts file to qm work happen during a webOS build. Here's simple ts file example.
+This plugin is for generating [TS](https://doc.qt.io/qt-6/linguist-ts-file-format.html) type of resource file from the QML application.   
+The TS file format used by Qt Linguist. The TS file is an intermediate output for QML localization. *.qm files are required for the application. Converting ts file to qm file work happens during a webOS build. Here's a simple ts file example.
 ```xml
    <?xml version="1.0" encoding="utf-8"?>
    <!DOCTYPE TS>
@@ -22,7 +22,7 @@ The TS file format used by Qt Linguist. The TS file is a intermediate output for
 
 #### Sample
 The simple sample is provided in [ilib-loctool-samples](https://github.com/iLib-js/ilib-loctool-samples) repository.
-Please check the [webos-qml](https://github.com/iLib-js/ilib-loctool-samples/tree/main/webos-qml) sample to see what TS file look like.
+Please check the [webos-qml](https://github.com/iLib-js/ilib-loctool-samples/tree/main/webos-qml) sample to see what TS file looks like.
 
 ## License
 
