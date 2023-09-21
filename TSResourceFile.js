@@ -85,16 +85,6 @@ TSResourceFile.prototype.getAll = function() {
     return this.set.getAll();
 };
 
-TSResourceFile.prototype.getFileName = function(pathName) {
-    if (!pathName) return;
-
-    var fileName = pathName;
-    var splitDir = fileName.split("/");
-    fileName = splitDir[splitDir.length-1];
-
-    return fileName;
-};
-
 /**
  * Add a resource to this file. The locale of the resource
  * should correspond to the locale of the file, and the
@@ -161,7 +151,7 @@ TSResourceFile.prototype.getContent = function() {
 
         for (var j = 0; j < resources.length; j++) {
             var resource = resources[j];
-            var filename = this.getFileName(resource.getPath());
+            var filename = path.basename(resource.getPath());
             var resContext = resource.getContext() || filename.replace(/\.qml|\.js/, "");
 
             if (content["context"] === undefined) {
