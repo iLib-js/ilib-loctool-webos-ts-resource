@@ -35,18 +35,18 @@ file for more details.
 ## Release Notes
 ### v1.5.3
 * Removed `npm-shrinkwrap.json`. It takes a bigger memory size than I expected on webOS. so I decided not to maintain the file here.
-* Update to use the path's `basename()` to get filename from the path.
+* Updated to use the path's `basename()` to get filename from the path.
 
 ### v1.5.2
 * Added `loctool` package to `peerDependencies` in `package.json`.
 
 ### v1.5.1
 * Updated dependencies. (loctool: 2.23.1)
-* Update to be included `npm-shrinkwrap.json` in the published files.
+* Updated to be included `npm-shrinkwrap.json` in the published files.
 
 ### v1.5.0
 * Updated dependencies. (loctool: 2.22.0)
-* Update to set context name value properly which is not always a file name.
+* Updated to set context name value properly which is not always a file name.
 
 ### v1.4.2
 * Updated dependencies. (loctool: 2.21.0)
