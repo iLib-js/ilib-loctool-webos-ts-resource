@@ -33,6 +33,9 @@ file for more details.
 
 
 ## Release Notes
+### v1.5.4
+* Converted all the unit tests from `nodeunit` to `jest`.
+
 ### v1.5.3
 * Removed `npm-shrinkwrap.json`. It takes a bigger memory size than I expected on webOS. so I decided not to maintain the file here.
 * Updated to use the path's `basename()` to get filename from the path.

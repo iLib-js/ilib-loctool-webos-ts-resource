@@ -1,5 +1,5 @@
 /*
- * testTSResourceFile.js - test the ts file handler object.
+ * TSResourceFile.test.js - test the ts file handler object.
  *
  * Copyright (c) 2020-2023, JEDLSoft
  *
@@ -21,19 +21,6 @@ if (!TSResourceFile) {
     var TSResourceFile = require("../TSResourceFile.js");
     var CustomProject = require("loctool/lib/CustomProject.js");
     var SourceContextResourceString = require("loctool/lib/SourceContextResourceString.js");
-}
-
-function diff(a, b) {
-    var min = Math.min(a.length, b.length);
-
-    for (var i = 0; i < min; i++) {
-        if (a[i] !== b[i]) {
-            console.log("Found difference at character " + i);
-            console.log("a: " + a.substring(i));
-            console.log("b: " + b.substring(i));
-            break;
-        }
-    }
 }
 
 var p = new CustomProject({
@@ -74,37 +61,35 @@ var p3 = new CustomProject({
     }
 });
 
-module.exports.tsresourcefile = {
-    testTSResourceFileConstructor: function(test) {
-        test.expect(1);
+describe("tsresourcefile", function() {
+    test("TSResourceFileConstructor", function() {
+        expect.assertions(1);
 
         var tsrf = new TSResourceFile({
             project: p
         });
-        test.ok(tsrf);
-        test.done();
-    },
-    testTSResourceFileConstructorParams: function(test) {
-        test.expect(1);
+        expect(tsrf).toBeTruthy();
+    });
+    test("TSResourceFileConstructorParams", function() {
+        expect.assertions(1);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "en-US"
         });
 
-        test.ok(tsrf);
-        test.done();
-    },
-    testTSResourceFileIsDirty: function(test) {
-        test.expect(3);
+        expect(tsrf).toBeTruthy();
+    });
+    test("TSResourceFileIsDirty", function() {
+        expect.assertions(3);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
-        test.ok(!tsrf.isDirty());
+        expect(tsrf).toBeTruthy();
+        expect(!tsrf.isDirty()).toBeTruthy();
 
         [
             {
@@ -142,18 +127,17 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.ok(tsrf.isDirty());
-        test.done();
-    },
-    testTSResourceFileRightContentsWithComment: function(test) {
-        test.expect(2);
+        expect(tsrf.isDirty()).toBeTruthy();
+    });
+    test("TSResourceFileRightContentsWithComment", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         var resource = new SourceContextResourceString({
                 type: "string",
                 project: "inputcommon",
@@ -168,8 +152,7 @@ module.exports.tsresourcefile = {
 
             });
         tsrf.addResource(resource);
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -183,17 +166,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-        test.done();
-    },
-    testTSResourceFileRightContents: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileRightContents", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         var resource = new SourceContextResourceString({
                 type: "string",
                 project: "inputcommon",
@@ -207,8 +189,7 @@ module.exports.tsresourcefile = {
 
             });
         tsrf.addResource(resource);
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -221,17 +202,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-        test.done();
-    },
-    testTSResourceFileRightContents2: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileRightContents2", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         [
             {
                 type: "string",
@@ -258,8 +238,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -277,18 +256,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-
-        test.done();
-    },
-    testTSResourceFileRightContents3: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileRightContents3", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         [
             {
                 type: "string",
@@ -325,8 +302,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -352,18 +328,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-
-        test.done();
-    },
-    testTSResourceFileRightContents4: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileRightContents4", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         [
             {
                 type: "string",
@@ -403,8 +377,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -430,17 +403,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-        test.done();
-    },
-    testTSResourceFileRightContents5: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileRightContents5", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         [
             {
                 type: "string",
@@ -480,8 +452,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -509,17 +480,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-        test.done();
-    },
-    testTSResourceJSFileRightContents: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceJSFileRightContents", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         var resource = new SourceContextResourceString({
                 type: "string",
                 project: "inputcommon",
@@ -533,8 +503,7 @@ module.exports.tsresourcefile = {
 
             });
         tsrf.addResource(resource);
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -547,17 +516,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-        test.done();
-    },
-    testTSResourceJSFileRightContents2: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceJSFileRightContents2", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         [
             {
                 type: "string",
@@ -584,8 +552,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -603,18 +570,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-
-        test.done();
-    },
-    testTSResourceJSFileRightContents3: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceJSFileRightContents3", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         [
             {
                 type: "string",
@@ -641,8 +606,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-        '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
         '<!DOCTYPE TS>\n' +
         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
         '  <context>\n' +
@@ -663,18 +627,16 @@ module.exports.tsresourcefile = {
         '  </context>\n' +
         '</TS>'
         );
-
-        test.done();
-    },
-    testTSResourceFileRightContentsSourceTargetSame: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileRightContentsSourceTargetSame", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         [
             {
                 type: "string",
@@ -691,8 +653,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -706,18 +667,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-
-        test.done()
-    },
-    testTSResourceFileRightContentsSourceTargetSame2: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileRightContentsSourceTargetSame2", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         [
             {
                 type: "string",
@@ -743,8 +702,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -763,18 +721,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-
-        test.done()
-    },
-    testTSResourceFileRightContentsKeyTargetSame: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileRightContentsKeyTargetSame", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         [
             {
                 type: "string",
@@ -791,8 +747,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -806,18 +761,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-
-        test.done()
-    },
-    testTSResourceFileRightContentsSourceKeyTargetSame: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileRightContentsSourceKeyTargetSame", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         [
             {
                 type: "string",
@@ -834,8 +787,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -848,18 +800,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-
-        test.done()
-    },
-    testTSResourceFileRightContentsSourceKeyTargetSame2: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileRightContentsSourceKeyTargetSame2", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         [
             {
                 type: "string",
@@ -898,8 +848,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-        '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
         '<!DOCTYPE TS>\n' +
         '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
         '  <context>\n' +
@@ -928,18 +877,16 @@ module.exports.tsresourcefile = {
         '  </context>\n' +
         '</TS>'
         );
-
-        test.done()
-    },
-    testTSResourceFileRightContentsDupkeys: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileRightContentsDupkeys", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
         [
             {
                 type: "string",
@@ -966,8 +913,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -987,174 +933,159 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-
-        test.done();
-    },
-    testTSResourceFileGetContentsNoContent: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileGetContentsNoContent", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getContent(),'<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE" sourcelanguage="en-KR"></TS>');
-        test.done();
-    },
-    testTSResourceFileGetResourceFilePathDefaultLocaleForLanguage: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE TS>\n<TS version="2.1" language="de-DE" sourcelanguage="en-KR"></TS>');
+    });
+    test("TSResourceFileGetResourceFilePathDefaultLocaleForLanguage", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de.ts");
-        test.done();
-    },
-    testTSResourceFileGetResourceFilePathDefaultLocaleForLanguageNoDefaultAvailable: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getResourceFilePath()).toBe("testfiles/locales/quicksettings_de.ts");
+    });
+    test("TSResourceFileGetResourceFilePathDefaultLocaleForLanguageNoDefaultAvailable", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "inputcommon_de.ts");
-        test.done();
-    },
-    testTSResourceFileGetResourceFilePathNonDefaultLocaleForLanguage: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getResourceFilePath()).toBe("inputcommon_de.ts");
+    });
+    test("TSResourceFileGetResourceFilePathNonDefaultLocaleForLanguage", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "de-AT"
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de_AT.ts");
-        test.done();
-    },
-    testTSResourceFileGetResourceFilePathDefaultLocaleForLanguageWithFlavor: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getResourceFilePath()).toBe("testfiles/locales/quicksettings_de_AT.ts");
+    });
+    test("TSResourceFileGetResourceFilePathDefaultLocaleForLanguageWithFlavor", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "de-DE"
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de.ts");
-        test.done();
-    },
-    testTSResourceFileGetResourceFilePathNonDefaultLocaleForLanguageWithFlavor: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getResourceFilePath()).toBe("testfiles/locales/quicksettings_de.ts");
+    });
+    test("TSResourceFileGetResourceFilePathNonDefaultLocaleForLanguageWithFlavor", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "de-AT-ASDF"
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de_AT_ASDF.ts");
-        test.done();
-    },
-    testTSResourceFileGetResourceFilePathDefaultLocaleForLanguageZH: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getResourceFilePath()).toBe("testfiles/locales/quicksettings_de_AT_ASDF.ts");
+    });
+    test("TSResourceFileGetResourceFilePathDefaultLocaleForLanguageZH", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "zh-Hans-CN"
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_zh.ts");
-        test.done();
-    },
-    testTSResourceFileGetResourceFilePathDefaultLocaleForLanguageZHNoDefaultsAvailable: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getResourceFilePath()).toBe("testfiles/locales/quicksettings_zh.ts");
+    });
+    test("TSResourceFileGetResourceFilePathDefaultLocaleForLanguageZHNoDefaultsAvailable", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p,
             locale: "zh-Hans-CN"
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "inputcommon_zh.ts");
-        test.done();
-    },
-    testTSResourceFileGetResourceFilePathDefaultLocaleForLanguageZH: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getResourceFilePath()).toBe("inputcommon_zh.ts");
+    });
+    test("TSResourceFileGetResourceFilePathDefaultLocaleForLanguageZH", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "zh-Hant-HK"
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_zh_Hant_HK.ts");
-        test.done();
-    },
-    testTSResourceFileGetResourceFilePathNonDefaultLocaleForLanguageZH2: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getResourceFilePath()).toBe("testfiles/locales/quicksettings_zh_Hant_HK.ts");
+    });
+    test("TSResourceFileGetResourceFilePathNonDefaultLocaleForLanguageZH2", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "zh-Hans-SG"
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_zh_Hans_SG.ts");
-        test.done();
-    },
-    testTSResourceFileGetResourceFilePathNonDefaultLocaleForLanguageZH3: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getResourceFilePath()).toBe("testfiles/locales/quicksettings_zh_Hans_SG.ts");
+    });
+    test("TSResourceFileGetResourceFilePathNonDefaultLocaleForLanguageZH3", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "zh-Hant-TW"
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_zh_Hant_TW.ts");
-        test.done();
-    },
-    testTSResourceFileGetResourceFilePathDefaultLocale: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getResourceFilePath()).toBe("testfiles/locales/quicksettings_zh_Hant_TW.ts");
+    });
+    test("TSResourceFileGetResourceFilePathDefaultLocale", function() {
+        expect.assertions(2);
 
         // should default to English/US
         var tsrf = new TSResourceFile({
             project: p2
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_en.ts");
-        test.done();
-    },
-    testTSResourceFileGetResourceFilePathAlreadyHasPath: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getResourceFilePath()).toBe("testfiles/locales/quicksettings_en.ts");
+    });
+    test("TSResourceFileGetResourceFilePathAlreadyHasPath", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "de-AT"
         });
 
-        test.ok(tsrf);
-        test.equal(tsrf.getResourceFilePath(), "testfiles/locales/quicksettings_de_AT.ts");
-        test.done();
-    },
-    testTSResourceFileGetContentDefaultLocale: function(test) {
-        test.expect(2);
+        expect(tsrf).toBeTruthy();
+        expect(tsrf.getResourceFilePath()).toBe("testfiles/locales/quicksettings_de_AT.ts");
+    });
+    test("TSResourceFileGetContentDefaultLocale", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "ko-KR"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
 
         [
             {
@@ -1192,8 +1123,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="ko-KR" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -1216,17 +1146,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-        test.done();
-    },
-    testTSResourceFileGetContentDefaultLocaleWithFlavor: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileGetContentDefaultLocaleWithFlavor", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "de-DE-ASDF"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
 
         [
             {
@@ -1264,8 +1193,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="de-DE-ASDF" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -1288,18 +1216,16 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-
-        test.done();
-    },
-    testTSResourceFileGetContentwithContext: function(test) {
-        test.expect(2);
+    });
+    test("TSResourceFileGetContentwithContext", function() {
+        expect.assertions(2);
 
         var tsrf = new TSResourceFile({
             project: p2,
             locale: "ko-KR"
         });
 
-        test.ok(tsrf);
+        expect(tsrf).toBeTruthy();
 
         [
             {
@@ -1329,8 +1255,7 @@ module.exports.tsresourcefile = {
             tsrf.addResource(resource);
         });
 
-        test.equal(tsrf.getContent(),
-         '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(tsrf.getContent()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
          '<!DOCTYPE TS>\n' +
          '<TS version="2.1" language="ko-KR" sourcelanguage="en-KR">\n' +
          '  <context>\n' +
@@ -1343,11 +1268,9 @@ module.exports.tsresourcefile = {
          '  </context>\n' +
          '</TS>'
         );
-
-        test.done();
-    },
-    teasTSResourceFileGetResourceFilePaths: function(test) {
-        test.expect(13);
+    });
+    test("teasTSResourceFileGetResourceFilePaths", function() {
+        expect.assertions(13);
         var tsrf;
         var locales = ["en-US","en-GB", "en-AU", "es-CO",
                     "es-ES","et-EE","fa-IR","fa-AF","fr-FR","fr-CA", "zh-Hans-CN","zh-Hant-HK","zh-Hant-TW"];
@@ -1366,12 +1289,11 @@ module.exports.tsresourcefile = {
                 project: p2,
                 locale: locales[i]
             });
-            test.equal(tsrf.getResourceFilePath(), expected[i]);
+            expect(tsrf.getResourceFilePath()).toBe(expected[i]);
         }
-        test.done();
-    },
-    teasTSResourceFileGetResourceFilePathsCustom: function(test) {
-        test.expect(4);
+    });
+    test("teasTSResourceFileGetResourceFilePathsCustom", function() {
+        expect.assertions(4);
         var tsrf;
         var locales = ["es-CO", "es-ES", "fr-CA","fr-FR"];
 
@@ -1386,8 +1308,7 @@ module.exports.tsresourcefile = {
                 project: p3,
                 locale: locales[i]
             });
-            test.equal(tsrf.getResourceFilePath(), expected[i]);
+            expect(tsrf.getResourceFilePath()).toBe(expected[i]);
         }
-        test.done();
-    }
-};
+    });
+});
